@@ -36,7 +36,7 @@ body {
     inset: -55px;
     background:
         linear-gradient(rgba(255,255,255,.13), rgba(0,0,0,.28)),
-        url("background.png") center center / cover no-repeat;
+        url("images/background/background.png") center center / cover no-repeat;
     filter: blur(16px);
     transform: scale(1.08);
     animation: backgroundMove 18s ease-in-out infinite alternate;
@@ -600,7 +600,7 @@ html, body, body * { cursor: none !important; }
 
 <div class="volume">
     <button id="muteButton" class="volume-button" type="button" aria-label="Mute">
-        <img id="volumeIcon" src="icons/volume.png" alt="Volume">
+        <img id="volumeIcon" src="images/icons/volume.png" alt="Volume">
     </button>
     <input id="volumeSlider" type="range" min="0" max="1" step=".01" value=".65" aria-label="Volume">
 </div>
@@ -617,15 +617,15 @@ html, body, body * { cursor: none !important; }
 
         <div class="socials">
             <a class="social" href="https://discord.gg/wqgnWtYpEn" target="_blank" rel="noopener">
-                <img class="social-icon" src="icons/discord.png">
+                <img class="social-icon" src="images/icons/discord.png">
             </a>
 
             <a class="social" href="https://tiktok.com/@leolovesovertonight" target="_blank" rel="noopener">
-                <img class="social-icon" src="icons/tiktok.png">
+                <img class="social-icon" src="images/icons/tiktok.png">
             </a>
 
             <a class="social" href="https://open.spotify.com/playlist/72F8rof9BVFaRj73Wcfjzc?si=4c3442b04b514764" target="_blank" rel="noopener">
-                <img class="social-icon" src="icons/spotify.png">
+                <img class="social-icon" src="images/icons/spotify.png">
             </a>
         </div>
 
@@ -667,7 +667,7 @@ html, body, body * { cursor: none !important; }
 
         <div class="player-buttons">
             <button class="player-button" id="playButton" type="button">
-                <img id="playIcon" src="icons/pause.png" alt="Pause">
+                <img id="playIcon" src="images/icons/pause.png" alt="Pause">
             </button>
         </div>
 
@@ -717,7 +717,7 @@ html, body, body * { cursor: none !important; }
             new Image();
 
         sparkleImage.src =
-            "icons/cursor.png";
+            "images/icons/ovtcursor.png";
 
 
         let particles = [];
@@ -925,10 +925,10 @@ const muteButton = document.getElementById("muteButton");
 const volumeIcon = document.getElementById("volumeIcon");
 
 const ICONS = {
-    play: "icons/play.png",
-    pause: "icons/pause.png",
-    mute: "icons/mute.png",
-    volume: "icons/volume.png"
+    play: "images/icons/play.png",
+    pause: "images/icons/pause.png",
+    mute: "images/icons/mute.png",
+    volume: "images/icons/volume.png"
 };
 
 let lastVolume = Number(volumeSlider.value);
