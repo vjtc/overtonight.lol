@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Supporters — overtonight</title>
+
+    <meta
+        name="description"
+        content="Overtonight supporters."
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="images/icons/ovticon.png"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            background: #000;
+
+            color: #fff;
+
+            font-family: Arial, sans-serif;
+
+            cursor: crosshair;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .supporters-header {
+
+            width: 100%;
+
+            padding:
+                24px
+                20px
+                10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .supporters-header h1 {
+
+            font-size:
+                clamp(
+                    24px,
+                    4vw,
+                    48px
+                );
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .home-link {
+
+            color: #fff;
+
+            text-decoration: none;
+
+            border: 1px solid #fff;
+
+            padding:
+                10px
+                14px;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+
+        }
+
+
+        .home-link:hover {
+
+            background: #fff;
+
+            color: #000;
+
+        }
+
+
+        /* =========================
+           SUPPORTER GRID
+        ========================= */
+
+        .supporters-grid {
+
+            width: 100%;
+
+            max-width: 1600px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        280px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .supporter-card {
+
+            overflow: hidden;
+
+            scroll-margin-top: 20px;
+
+        }
+
+
+        .supporter-card img {
+
+            width: 100%;
+
+            height: auto;
+
+            display: block;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease;
+
+        }
+
+
+        .supporter-card img:hover {
+
+            transform: scale(1.02);
+
+        }
+
+
+        /* =========================
+           IMAGE MODAL
+        ========================= */
+
+        .image-modal-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 5000;
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.85
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+
+        }
+
+
+        .image-modal-overlay.active {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+
+        }
+
+
+        .expanded-image {
+
+            max-width: 90%;
+
+            max-height: 85vh;
+
+            object-fit: contain;
+
+            border-radius: 4px;
+
+            box-shadow:
+                0 4px 20px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.5
+                );
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .supporters-header {
+
+                padding:
+                    18px
+                    12px
+                    8px;
+
+            }
+
+
+            .supporters-grid {
+
+                padding: 12px;
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+    
+        /* =========================
+           SHARED SITE NAVIGATION
+        ========================= */
+        .site-nav {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 5000;
+        }
+        .nav-toggle {
+            appearance: none;
+            background: rgba(0,0,0,.78);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.8);
+            padding: 11px 15px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: .2s;
+        }
+        .nav-toggle:hover,.nav-toggle:focus-visible { background:#fff; color:#000; outline:none; }
+        .nav-menu {
+            position:absolute; top:calc(100% + 7px); left:0; width:220px; display:none;
+            background:rgba(0,0,0,.92); border:1px solid rgba(255,255,255,.35);
+            backdrop-filter:blur(18px); box-shadow:0 20px 60px rgba(0,0,0,.5);
+        }
+        .site-nav:hover .nav-menu,.site-nav:focus-within .nav-menu,.site-nav.open .nav-menu { display:block; }
+        .nav-menu a { display:block; padding:13px 15px; color:#fff; text-decoration:none; font-size:11px; letter-spacing:1.3px; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.10); transition:.2s; }
+        .nav-menu a:last-child { border-bottom:0; }
+        .nav-menu a:hover,.nav-menu a.active { background:#fff; color:#000; }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         IMAGE MODAL
+    ========================= -->
+
+    <div
+        class="image-modal-overlay"
+        id="imageModal"
+    >
+
+        <img
+            src=""
+            alt="Expanded View"
+            class="expanded-image"
+            id="expandedImg"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+<nav class="site-nav" aria-label="Site navigation">
+        <button class="nav-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+            Navigate ▾
+        </button>
+        <div class="nav-menu">
+            <a href="/">Home</a>
+            <a href="/biography">Biography</a>
+            <a href="/supporters" class="active">Supporters</a>
+        </div>
+    </nav>
+
+    <header class="supporters-header">
+
+        <h1>
+            
+        </h1>
+
+
+
+
+    </header>
+
+
+    <!-- =========================
+         ALL SUPPORTERS
+    ========================= -->
+
+    <main class="supporters-grid">
+
+
+        <article
+            class="supporter-card"
+            id="exc"
+        >
+
+            <img
+                src="images/mentions/exc.png"
+                alt="Exc supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="issaclv"
+        >
+
+            <img
+                src="images/mentions/issaclovesovt.png"
+                alt="Issaclovesovt supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="bean"
+        >
+
+            <img
+                src="images/mentions/bean.png"
+                alt="Bean supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="ghostboy"
+        >
+
+            <img
+                src="images/mentions/ghostboy.png"
+                alt="Ghostboy supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="trippy"
+        >
+
+            <img
+                src="images/mentions/trippy.png"
+                alt="Trippy supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="vyre"
+        >
+
+            <img
+                src="images/mentions/vyre.png"
+                alt="Vyre supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="zenotalkk"
+        >
+
+            <img
+                src="images/mentions/zenotalkk.png"
+                alt="Zenotalkk supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="sal"
+        >
+
+            <img
+                src="images/mentions/sal.png"
+                alt="Sal supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="leo"
+        >
+
+            <img
+                src="images/mentions/leo.png"
+                alt="Leo supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="jammy"
+        >
+
+            <img
+                src="images/mentions/jammy.png"
+                alt="Jammy supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="issac"
+        >
+
+            <img
+                src="images/mentions/issac2.png"
+                alt="Issac supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="bush"
+        >
+
+            <img
+                src="images/mentions/bush.png"
+                alt="Bush supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="ry4n"
+        >
+
+            <img
+                src="images/mentions/ry4n.png"
+                alt="R4yn supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="ovtfan"
+        >
+
+            <img
+                src="images/mentions/ovtfan.png"
+                alt="Ovtfan supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="doughnuut"
+        >
+
+            <img
+                src="images/mentions/doughnuut.png"
+                alt="Doughnuut supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="nerdana"
+        >
+
+            <img
+                src="images/mentions/nerdana.png"
+                alt="Nerdana supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="nowitch"
+        >
+
+            <img
+                src="images/mentions/nowitch.png"
+                alt="Nowitch supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="dino"
+        >
+
+            <img
+                src="images/mentions/dino.png"
+                alt="Dino supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="dan"
+        >
+
+            <img
+                src="images/mentions/dan.png"
+                alt="Dan supporter"
+                loading="lazy"
+            >
+
+        </article>
+        <article
+            class="supporter-card"
+            id="panellball"
+        >
+
+            <img
+                src="images/mentions/panelball.png"
+                alt="Panellball supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="hxtx"
+        >
+
+            <img
+                src="images/mentions/hxtx.png"
+                alt="Hxtx supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="issac"
+        >
+
+            <img
+                src="images/mentions/issac.png"
+                alt="Issac supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="marteey"
+        >
+
+            <img
+                src="images/mentions/marteey.png"
+                alt="Marteey supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="maserr"
+        >
+
+            <img
+                src="images/mentions/maserr.png"
+                alt="Maserr supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="neo"
+        >
+
+            <img
+                src="images/mentions/neo.png"
+                alt="Neo supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="izzu"
+        >
+
+            <img
+                src="images/mentions/izzu.png"
+                alt="Izzu supporter"
+                loading="lazy"
+            >
+
+        </article>
+
+
+        <article
+            class="supporter-card"
+            id="bella"
+        >
+
+            <img
+                src="images/mentions/bella.png"
+                alt="Bella supporter"
+                loading="lazy"
+            >
+
+
+    </main>
+
+
+    <!-- =========================
+         IMAGE ZOOM JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        const modal =
+            document.getElementById(
+                "imageModal"
+            );
+
+
+        const expandedImage =
+            document.getElementById(
+                "expandedImg"
+            );
+
+
+        const supporterImages =
+            document.querySelectorAll(
+                ".supporter-card img"
+            );
+
+
+        supporterImages.forEach(
+            image => {
+
+                image.addEventListener(
+                    "click",
+                    () => {
+
+                        expandedImage.src =
+                            image.src;
+
+                        expandedImage.alt =
+                            image.alt;
+
+                        modal.classList.add(
+                            "active"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        modal.addEventListener(
+            "click",
+            () => {
+
+                modal.classList.remove(
+                    "active"
+                );
+
+                expandedImage.src = "";
+
+            }
+        );
+
+
+        /* Close with Escape */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    modal.classList.remove(
+                        "active"
+                    );
+
+                    expandedImage.src = "";
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           AUDIO — START IMMEDIATELY
+           ========================= */
+
+        const AUDIO_VOLUME = 0.5;
+        const AUDIO_START_TIME = 0;
+
+        const audio =
+            document.getElementById("siteAudio");
+
+        const splashScreen =
+            document.getElementById("splashScreen");
+
+        const enterButton =
+            document.getElementById("enterButton");
+
+
+        audio.volume = AUDIO_VOLUME;
+        audio.currentTime = AUDIO_START_TIME;
+
+        // Keep the exact starting position from the second file.
+        audio.currentTime = AUDIO_START_TIME;
+
+        function startSiteAudio() {
+            audio.volume = AUDIO_VOLUME;
+
+            // Only reset if the browser has not already started it.
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    // Browsers may block autoplay with sound until the
+                    // visitor interacts with the page.
+                    console.log("Autoplay was blocked:", error);
+                });
+            }
+        }
+
+        // Try as soon as the page is loaded.
+        window.addEventListener("DOMContentLoaded", startSiteAudio);
+
+        // Also try when returning to the page through browser navigation.
+        window.addEventListener("pageshow", startSiteAudio);
+
+        // If autoplay is blocked, the first interaction starts it.
+        ["pointerdown", "keydown", "touchstart"].forEach(eventName => {
+            window.addEventListener(eventName, startSiteAudio, {
+                once: true,
+                passive: true
+            });
+        });
+
+    </script>
+
+
+    <script>
+    const navToggle = document.querySelector(".nav-toggle");
+    const siteNav = document.querySelector(".site-nav");
+    if (navToggle && siteNav) {
+        navToggle.addEventListener("click", () => {
+            const open = navToggle.getAttribute("aria-expanded") === "true";
+            navToggle.setAttribute("aria-expanded", String(!open));
+            siteNav.classList.toggle("open", !open);
+        });
+        document.addEventListener("click", (event) => {
+            if (!siteNav.contains(event.target)) {
+                navToggle.setAttribute("aria-expanded", "false");
+                siteNav.classList.remove("open");
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>

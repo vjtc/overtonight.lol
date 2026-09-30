@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>overtonight</title>
+
+    <meta name="description" content="A deep dive into the background of overtonight, the music, the art, and the story behind the scenes.">
+    <meta name="keywords" content="overtonight, ovt, tankboy, ghostboy">
+    <meta name="robots" content="index, follow">
+
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="icon" type="image/png" href="images/icons/ovticon.png">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #000;
+            font-family: Arial, sans-serif;
+            cursor: crosshair;
+        }
+
+        /* =========================
+           ENTRY SPLASH SCREEN
+        ========================= */
+
+        .entry-splash {
+            position: fixed;
+            inset: 0;
+            z-index: 4000;
+            background: #000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                opacity 0.5s ease,
+                visibility 0.5s ease;
+        }
+
+        .entry-splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .enter-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+
+            padding: 15px 30px;
+
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .enter-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        /* =========================
+           SHARED SITE NAVIGATION
+        ========================= */
+
+        .site-nav {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 5000;
+        }
+
+        .nav-toggle {
+            appearance: none;
+            background: rgba(0,0,0,.78);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.8);
+            padding: 11px 15px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .nav-toggle:hover,
+        .nav-toggle:focus-visible {
+            background: #fff;
+            color: #000;
+            outline: none;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: calc(100% + 7px);
+            left: 0;
+            width: 220px;
+            display: none;
+            background: rgba(0,0,0,.92);
+            border: 1px solid rgba(255,255,255,.35);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+        }
+
+        .site-nav:hover .nav-menu,
+        .site-nav:focus-within .nav-menu {
+            display: block;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 13px 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,.10);
+            transition: .2s;
+        }
+
+        .nav-menu a:last-child {
+            border-bottom: 0;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #fff;
+            color: #000;
+        }
+
+        @media (max-width: 600px) {
+            .site-nav {
+                top: 12px;
+                left: 12px;
+            }
+
+            .nav-toggle {
+                padding: 10px 14px;
+                font-size: 10px;
+            }
+
+            .nav-menu {
+                width: 190px;
+            }
+        }
+
+        /* =========================
+           IMAGE MODAL
+        ========================= */
+
+        .image-modal-overlay {
+            position: fixed;
+            inset: 0;
+
+            z-index: 5000;
+
+            background: rgba(0, 0, 0, 0.85);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+        }
+
+        .image-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .expanded-image {
+            max-width: 90%;
+            max-height: 85vh;
+
+            object-fit: contain;
+
+            border-radius: 4px;
+
+            box-shadow:
+                0px 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .dashboard-container {
+            position: relative;
+
+            z-index: 1;
+
+            width: 100%;
+            max-width: 1600px;
+
+            margin: 0 auto;
+            padding: 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 20px;
+
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .dashboard-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .dashboard-card {
+            cursor: pointer;
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+
+            transition: transform 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: scale(1.02);
+        }
+
+        .dashboard-card img {
+            width: 100%;
+            height: auto;
+
+            display: block;
+        }
+
+        /* =========================
+           SPARKLES
+        ========================= */
+
+        #sparkles {
+            position: fixed;
+            inset: 0;
+
+            z-index: 3000;
+
+            width: 100vw;
+            height: 100vh;
+
+            pointer-events: none;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .supporters-nav {
+                top: 12px;
+                left: 12px;
+            }
+
+            .supporters-toggle {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
+            .supporters-menu {
+                min-width: 190px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- =========================
+         SHARED SITE NAVIGATION
+    ========================= -->
+
+    <nav class="site-nav" aria-label="Site navigation">
+        <button class="nav-toggle" type="button" aria-haspopup="true">
+            Navigate ▾
+        </button>
+        <div class="nav-menu">
+            <a href="/" class="active">Home</a>
+            <a href="/biography">Biography</a>
+            <a href="/supporters">Supporters</a>
+        </div>
+    </nav>
+
+
+    <!-- =========================
+         IMAGE MODAL
+    ========================= -->
+
+    <div
+        class="image-modal-overlay"
+        id="imageModal"
+    >
+
+        <img
+            src=""
+            alt="Expanded View"
+            class="expanded-image"
+            id="expandedImg"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         ENTRY SCREEN
+    ========================= -->
+
+    <div
+        class="entry-splash"
+        id="splashScreen"
+    >
+
+        <button
+            class="enter-btn"
+            id="enterButton"
+        >
+            Enter Ghost Territories
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+         
+         Your supporter images are
+         intentionally NOT here.
+         
+         They are now on /supporters.
+    ========================= -->
+
+    <main class="dashboard-container">
+    </main>
+
+
+    <!-- =========================
+         SPARKLES
+    ========================= -->
+
+    <canvas id="sparkles"></canvas>
+
+
+    <!-- =========================
+         AUDIO
+    ========================= -->
+
+    <audio
+        id="siteAudio"
+        preload="auto"
+        loop
+    >
+
+        <source
+            src="audio/songs/hotel_room.mp3"
+            type="audio/mp3"
+        >
+
+    </audio>
+
+
+    <script>
+
+        /* =========================
+           AUDIO
+        ========================= */
+
+        const AUDIO_VOLUME = 0.5;
+        const AUDIO_START_TIME = 0;
+
+        const audio =
+            document.getElementById("siteAudio");
+
+        const splashScreen =
+            document.getElementById("splashScreen");
+
+        const enterButton =
+            document.getElementById("enterButton");
+
+
+        audio.volume = AUDIO_VOLUME;
+        audio.currentTime = AUDIO_START_TIME;
+
+
+        enterButton.addEventListener("click", () => {
+
+            splashScreen.classList.add("hidden");
+
+            audio.currentTime = AUDIO_START_TIME;
+            audio.volume = AUDIO_VOLUME;
+
+            audio.play().catch(error => {
+
+                console.log(
+                    "Audio could not start playback:",
+                    error
+                );
+
+            });
+
+        });
+
+
+        /* =========================
+           SPARKLE CURSOR
+        ========================= */
+
+        const canvas =
+            document.getElementById("sparkles");
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        const sparkleImage =
+            new Image();
+
+        sparkleImage.src =
+            "images/icons/ovtcursor.png";
+
+
+        let particles = [];
+
+
+        function resizeCanvas() {
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+        }
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        resizeCanvas();
+
+
+        window.addEventListener(
+            "mousemove",
+            event => {
+
+                for (
+                    let i = 0;
+                    i < 1;
+                    i++
+                ) {
+
+                    particles.push({
+
+                        x: event.clientX,
+                        y: event.clientY,
+
+                        size:
+                            10 +
+                            Math.random() * 10,
+
+                        vx:
+                            (Math.random() - 0.5) *
+                            1.5,
+
+                        vy:
+                            (Math.random() - 0.5) *
+                            1.5,
+
+                        life: 1,
+
+                        decay:
+                            Math.random() * 0.03 +
+                            0.015,
+
+                        rotation:
+                            Math.random() *
+                            Math.PI *
+                            2,
+
+                        spin:
+                            (Math.random() - 0.5) *
+                            0.05
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           ANIMATION
+        ========================= */
+
+        function animate() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            particles =
+                particles.filter(p => {
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    p.life -= p.decay;
+
+                    p.rotation += p.spin;
+
+
+                    if (p.life <= 0) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        sparkleImage.complete &&
+                        sparkleImage.naturalWidth
+                    ) {
+
+                        ctx.save();
+
+                        ctx.globalAlpha =
+                            p.life;
+
+
+                        ctx.translate(
+                            p.x,
+                            p.y
+                        );
+
+
+                        ctx.rotate(
+                            p.rotation
+                        );
+
+
+                        ctx.drawImage(
+
+                            sparkleImage,
+
+                            -p.size,
+                            -p.size,
+
+                            p.size,
+                            p.size
+
+                        );
+
+
+                        ctx.restore();
+
+                    }
+
+
+                    return true;
+
+                });
+
+
+            requestAnimationFrame(
+                animate
+            );
+
+        }
+
+
+        animate();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>overtonight — biography</title>
+<meta name="description" content="The biography and archive of overtonight.">
+<link rel="icon" type="image/png" href="images/icons/ovticon.png">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  background:#000 url("home_assets/home-background.jpg") center/cover fixed no-repeat;
+  color:#fff;font-family:Arial,sans-serif;cursor:crosshair;
+}
+body:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.30);pointer-events:none;z-index:-1}
+button,a{font:inherit}
+button{cursor:pointer}
+
+/* TOP LEFT MENU */
+.site-nav{position:fixed;top:18px;left:18px;z-index:5000}
+.nav-toggle{
+  background:rgba(0,0,0,.78);color:#fff;border:1px solid rgba(255,255,255,.8);
+  padding:11px 15px;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  backdrop-filter:blur(12px);transition:.2s;
+}
+.nav-toggle:hover{background:#fff;color:#000}
+.nav-menu{
+  position:absolute;top:calc(100% + 7px);left:0;width:220px;
+  display:none;background:rgba(0,0,0,.92);border:1px solid rgba(255,255,255,.35);
+  backdrop-filter:blur(18px);box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.site-nav:hover .nav-menu,.site-nav:focus-within .nav-menu{display:block}
+.nav-menu a{
+  display:block;padding:13px 15px;color:#fff;text-decoration:none;
+  font-size:11px;letter-spacing:1.3px;text-transform:uppercase;
+  border-bottom:1px solid rgba(255,255,255,.10);transition:.2s;
+}
+.nav-menu a:last-child{border-bottom:0}
+.nav-menu a:hover,.nav-menu a.active{background:#fff;color:#000}
+
+/* MAIN APP */
+.bio-app{
+  width:100%;height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:72px 22px 22px;
+}
+.bio-shell{
+  width:min(1180px,96vw);height:min(780px,calc(100vh - 94px));
+  min-height:520px;border:1px solid rgba(255,255,255,.18);border-radius:18px;
+  overflow:hidden;background:rgba(4,4,4,.76);backdrop-filter:blur(22px);
+  box-shadow:0 35px 120px rgba(0,0,0,.55);display:grid;
+  grid-template-columns:230px 1fr;
+}
+
+/* SIDEBAR */
+.sidebar{
+  border-right:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.025);
+  padding:22px 14px;display:flex;flex-direction:column;
+}
+.brand{padding:5px 10px 23px}
+.brand small{display:block;color:rgba(255,255,255,.35);font-size:8px;letter-spacing:3px}
+.brand h1{font-size:25px;font-weight:400;letter-spacing:-1px;margin-top:8px}
+.brand span{display:block;color:rgba(255,255,255,.38);font-size:9px;letter-spacing:2px;margin-top:5px}
+.section-label{padding:7px 10px 9px;color:rgba(255,255,255,.28);font-size:8px;letter-spacing:3px}
+.side-btn{
+  width:100%;border:0;background:transparent;color:rgba(255,255,255,.55);
+  text-align:left;padding:11px 10px;border-radius:8px;font-size:11px;
+  letter-spacing:.5px;transition:.2s;margin-bottom:2px;
+}
+.side-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.side-btn.active{background:#fff;color:#000}
+.side-footer{margin-top:auto;padding:15px 10px;color:rgba(255,255,255,.27);font-size:8px;line-height:1.6;letter-spacing:1px}
+
+/* CONTENT */
+.content{min-width:0;display:flex;flex-direction:column}
+.content-top{
+  min-height:74px;border-bottom:1px solid rgba(255,255,255,.10);
+  padding:20px 30px;display:flex;align-items:center;justify-content:space-between;
+}
+.crumb{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.35)}
+.status{font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.35)}
+.status i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#fff;margin-right:7px;box-shadow:0 0 8px #fff}
+.views{position:relative;flex:1;min-height:0}
+.view{
+  position:absolute;inset:0;display:none;padding:35px 42px;overflow:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent;
+  animation:in .22s ease;
+}
+.view.active{display:block}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.kicker{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.35)}
+.view h2{font-size:clamp(32px,4vw,58px);font-weight:400;letter-spacing:-2.5px;margin:10px 0 20px}
+.view h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:28px 0 12px}
+.lede{max-width:800px;color:rgba(255,255,255,.72);font-size:14px;line-height:1.8}
+.copy{max-width:820px;color:rgba(255,255,255,.62);font-size:13px;line-height:1.8;margin:0 0 15px}
+
+/* HOME / OVERVIEW */
+.hero-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:18px;max-width:1000px}
+.intro-card,.stat-card,.quote,.mini-card{
+  border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.035);
+  border-radius:12px;
+}
+.intro-card{padding:25px}
+.stat-card{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:9px}
+.stat span{display:block;color:rgba(255,255,255,.32);font-size:7px;letter-spacing:2px;margin-bottom:7px}
+.stat strong{font-size:13px;font-weight:400}
+.quote{margin-top:18px;padding:18px 20px;border-left:2px solid #fff;color:rgba(255,255,255,.65);line-height:1.65;font-style:italic}
+
+/* TIMELINE */
+.timeline{border-left:1px solid rgba(255,255,255,.2);margin:25px 0;padding-left:24px;max-width:850px}
+.t-row{position:relative;padding:0 0 22px}
+.t-row:last-child{padding-bottom:0}
+.t-row:before{content:"";position:absolute;left:-29px;top:4px;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+.t-row b{display:block;font-size:9px;letter-spacing:2px}
+.t-row span{display:block;color:rgba(255,255,255,.48);font-size:12px;line-height:1.6;margin-top:5px}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;max-width:900px}
+.mini-card{padding:18px}
+.mini-card span{display:block;color:rgba(255,255,255,.3);font-size:7px;letter-spacing:2px;margin-bottom:7px}
+.mini-card strong{font-size:13px;font-weight:400}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0}
+.tag{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 9px;font-size:8px;letter-spacing:1.3px;color:rgba(255,255,255,.55)}
+
+/* TRACKS / COLLABS */
+.track-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;max-width:900px}
+.track{
+  padding:12px 14px;border:1px solid rgba(255,255,255,.09);border-radius:8px;
+  background:rgba(255,255,255,.025);color:rgba(255,255,255,.68);font-size:11px;
+}
+.track b{color:rgba(255,255,255,.3);font-size:8px;margin-right:8px}
+.collabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:900px}
+.collab{padding:14px;border:1px solid rgba(255,255,255,.10);border-radius:9px;background:rgba(255,255,255,.035);font-size:11px;color:rgba(255,255,255,.65)}
+.collab-name{display:block;color:#fff;font-weight:700;margin-bottom:6px}
+.collab-role{display:block;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.34);margin-bottom:9px}
+.collab-links{display:flex;gap:6px;flex-wrap:wrap}
+.collab-links a{display:inline-block;padding:5px 7px;border:1px solid rgba(255,255,255,.12);border-radius:999px;color:rgba(255,255,255,.62);text-decoration:none;font-size:8px;letter-spacing:.6px;text-transform:uppercase}
+.collab-links a:hover{background:#fff;color:#000}
+.collab-note{font-size:8px;line-height:1.5;color:rgba(255,255,255,.32);margin-top:8px}
+.collab{cursor:pointer;transition:.2s;position:relative}
+.collab:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24);transform:translateY(-1px)}
+.collab:focus-visible{outline:1px solid #fff;outline-offset:2px}
+.collab:after{content:"↗";position:absolute;right:12px;top:12px;color:rgba(255,255,255,.28);font-size:11px}
+.collab-links{display:none}
+
+/* COLLABORATOR POPUP */
+.collab-modal{
+  position:fixed;inset:0;z-index:11000;display:none;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);
+}
+.collab-modal.open{display:flex}
+.collab-modal-box{
+  width:min(560px,94vw);max-height:min(720px,88vh);overflow:auto;background:#080808;
+  border:1px solid rgba(255,255,255,.25);border-radius:16px;
+  box-shadow:0 30px 110px rgba(0,0,0,.8);
+}
+.collab-modal-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+  padding:20px;border-bottom:1px solid rgba(255,255,255,.12);
+}
+.collab-modal-kicker{font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.32);text-transform:uppercase;margin-bottom:7px}
+.collab-modal-title{font-size:25px;font-weight:400;letter-spacing:-.8px;color:#fff}
+.collab-modal-role{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:7px}
+.collab-modal-close{
+  flex:0 0 auto;border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;
+  width:32px;height:32px;border-radius:50%;font-size:18px;line-height:1;cursor:pointer;
+}
+.collab-modal-close:hover{background:#fff;color:#000}
+.collab-modal-body{padding:20px}
+.collab-modal-note{font-size:12px;line-height:1.7;color:rgba(255,255,255,.58);margin-bottom:20px}
+.collab-modal-links{display:flex;flex-wrap:wrap;gap:8px}
+.collab-modal-links a{
+  display:inline-flex;align-items:center;gap:6px;padding:10px 13px;border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;color:#fff;text-decoration:none;font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  transition:.2s;background:rgba(255,255,255,.035)
+}
+.collab-modal-links a:hover{background:#fff;color:#000}
+.collab-modal-empty{font-size:9px;line-height:1.6;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:18px}
+
+/* RELEASE SWITCHER */
+.release-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:20px 0}
+.release-tab{
+  border:1px solid rgba(255,255,255,.16);background:transparent;color:rgba(255,255,255,.55);
+  border-radius:999px;padding:9px 12px;font-size:9px;letter-spacing:1px;text-transform:uppercase;
+}
+.release-tab.active,.release-tab:hover{background:#fff;color:#000}
+.release-panel{display:none}
+.release-panel.active{display:block}
+
+/* SOURCE LINKS */
+.source{
+  display:block;color:#fff;text-decoration:none;padding:14px 15px;margin:8px 0;
+  border:1px solid rgba(255,255,255,.10);border-radius:9px;background:rgba(255,255,255,.03);
+  max-width:850px;font-size:11px;letter-spacing:.5px;
+}
+.source:hover{background:#fff;color:#000}
+
+
+/* SPOTIFY SONG POPUP */
+.spotify-modal{
+  position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.80);backdrop-filter:blur(12px);
+}
+.spotify-modal.open{display:flex}
+.spotify-modal-box{
+  width:min(680px,94vw);background:#080808;border:1px solid rgba(255,255,255,.25);
+  border-radius:16px;box-shadow:0 30px 100px rgba(0,0,0,.75);overflow:hidden;
+}
+.spotify-modal-head{
+  display:flex;align-items:center;justify-content:space-between;padding:16px 18px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.spotify-modal-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.spotify-modal-close{
+  border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;
+  width:32px;height:32px;border-radius:50%;font-size:18px;line-height:1;cursor:pointer;
+}
+.spotify-modal-close:hover{background:#fff;color:#000}
+.spotify-embed-wrap{padding:18px}
+.spotify-embed{
+  width:100%;height:152px;border:0;border-radius:12px;display:block;
+}
+.track{cursor:pointer}
+.track:hover{background:rgba(255,255,255,.10)}
+.track:focus-visible{outline:1px solid #fff;outline-offset:2px}
+.spotify-hint{
+  padding:0 18px 18px;color:rgba(255,255,255,.38);font-size:9px;line-height:1.6;
+}
+@media(max-width:520px){
+  .spotify-modal{padding:10px}
+  .spotify-modal-box{width:96vw}
+  .spotify-embed{height:152px}
+}
+
+/* MOBILE */
+@media(max-width:800px){
+  html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+  body{background-attachment:scroll}
+  .site-nav{top:10px;left:10px}
+  .nav-toggle{padding:10px 12px;font-size:10px}
+  .nav-menu{top:calc(100% + 5px);width:200px}
+
+  .bio-app{
+    width:100%;
+    min-height:100vh;
+    height:auto;
+    padding:58px 8px 12px;
+    display:block;
+  }
+
+  .bio-shell{
+    width:100%;
+    height:auto;
+    min-height:0;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    overflow:visible;
+  }
+
+  .sidebar{
+    width:100%;
+    height:auto;
+    min-height:0;
+    flex:none;
+    border-right:0;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    padding:8px;
+    display:flex;
+    flex-direction:row;
+    gap:5px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .sidebar::-webkit-scrollbar{display:none}
+  .brand,.section-label,.side-footer{display:none}
+  .side-btn{
+    width:auto;
+    flex:0 0 auto;
+    display:block;
+    white-space:nowrap;
+    margin:0;
+    padding:9px 10px;
+    font-size:10px;
+  }
+
+  .content{width:100%;min-height:0;display:flex}
+  .content-top{
+    min-height:48px;
+    padding:12px 14px;
+    gap:12px;
+  }
+  .crumb{font-size:7px;letter-spacing:2px}
+  .status{font-size:7px;letter-spacing:1px;white-space:nowrap}
+
+  .views{
+    position:relative;
+    min-height:0;
+    height:auto;
+  }
+  .view{
+    position:relative;
+    inset:auto;
+    display:none;
+    padding:24px 16px 32px;
+    overflow:visible;
+    min-height:0;
+  }
+  .view.active{display:block}
+
+  .view h2{
+    font-size:clamp(29px,9vw,40px);
+    line-height:1.05;
+    letter-spacing:-1.5px;
+    overflow-wrap:anywhere;
+    margin:9px 0 18px;
+  }
+  .lede,.copy{
+    max-width:none;
+    font-size:13px;
+    line-height:1.7;
+  }
+
+  .hero-grid,.card-grid,.track-grid,.collabs{
+    grid-template-columns:1fr;
+    max-width:none;
+    width:100%;
+  }
+  .intro-card,.stat-card,.mini-card,.collab{padding:15px}
+  .stat-card{grid-template-columns:1fr 1fr;gap:7px}
+  .stat{padding:11px}
+  .stat strong{font-size:12px}
+  .timeline{margin:20px 0;padding-left:20px}
+  .t-row:before{left:-25px}
+  .release-tabs{gap:6px}
+  .release-tab{padding:8px 10px;font-size:8px}
+  .track{font-size:11px;padding:12px}
+  .tags{gap:6px}
+  .tag{padding:6px 8px}
+  .source{max-width:none;font-size:10px;padding:12px}
+}
+
+@media(max-width:520px){
+  .stat-card{grid-template-columns:1fr}
+  .collabs{grid-template-columns:1fr}
+  .content-top{align-items:flex-start}
+  .status i{margin-right:4px}
+  .spotify-modal{padding:8px}
+  .spotify-modal-box{width:100%;max-height:90vh}
+  .spotify-embed-wrap{padding:12px}
+  .spotify-hint{padding:0 12px 14px}
+  .collab-modal{padding:8px}
+  .collab-modal-box{width:100%;max-height:90vh}
+}
+</style>
+</head>
+
+<body>
+
+<div class="collab-modal" id="collabModal" aria-hidden="true">
+  <div class="collab-modal-box" role="dialog" aria-modal="true" aria-labelledby="collabModalTitle">
+    <div class="collab-modal-head">
+      <div>
+        <div class="collab-modal-kicker">Collaborator profile</div>
+        <div class="collab-modal-title" id="collabModalTitle">Collaborator</div>
+        <div class="collab-modal-role" id="collabModalRole">Credit</div>
+      </div>
+      <button class="collab-modal-close" id="collabModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="collab-modal-body">
+      <div class="collab-modal-note" id="collabModalNote"></div>
+      <div class="collab-modal-links" id="collabModalLinks"></div>
+      <div class="collab-modal-empty" id="collabModalEmpty" style="display:none">No platform profile was confidently verified for this collaborator yet.</div>
+    </div>
+  </div>
+</div>
+
+<div class="spotify-modal" id="spotifyModal" aria-hidden="true">
+  <div class="spotify-modal-box" role="dialog" aria-modal="true" aria-labelledby="spotifyModalTitle">
+    <div class="spotify-modal-head">
+      <span class="spotify-modal-title" id="spotifyModalTitle">Spotify Preview</span>
+      <button class="spotify-modal-close" id="spotifyModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="spotify-embed-wrap">
+      <iframe
+        class="spotify-embed"
+        id="spotifyEmbed"
+        title="Spotify song preview"
+        src="about:blank"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="eager">
+      </iframe>
+    </div>
+    <div class="spotify-hint">Playback is provided by Spotify. If Spotify requires an account or a track is unavailable in your region, use the Spotify player to open it there.</div>
+  </div>
+</div>
+
+
+<nav class="site-nav" aria-label="Site navigation">
+        <button class="nav-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+            Navigate ▾
+        </button>
+        <div class="nav-menu">
+            <a href="/">Home</a>
+            <a href="/biography" class="active">Biography</a>
+            <a href="/supporters">Supporters</a>
+        </div>
+    </nav>
+
+<main class="bio-app">
+  <section class="bio-shell">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <small>OVERTONIGHT / ARCHIVE</small>
+        <h1>Biography</h1>
+        <span>THE STORY BEHIND THE PROJECT</span>
+      </div>
+
+      <div class="section-label">EXPLORE</div>
+      <button class="side-btn active" data-view="overview">Overview</button>
+      <button class="side-btn" data-view="origin">The Beginning</button>
+      <button class="side-btn" data-view="early">Early Years</button>
+      <button class="side-btn" data-view="timeline">Timeline</button>
+      <button class="side-btn" data-view="sound">The Sound</button>
+      <button class="side-btn" data-view="method">Creative Method</button>
+      <button class="side-btn" data-view="releases">Releases</button>
+      <button class="side-btn" data-view="breakout">mirrors demo</button>
+      <button class="side-btn" data-view="influences">Influences</button>
+      <button class="side-btn" data-view="collabs">Collaborators</button>
+      <button class="side-btn" data-view="lore">Lore / Rabbit Hole</button>
+      <button class="side-btn" data-view="current">Current Era</button>
+      <button class="side-btn" data-view="throwaways">Throwaways Archive</button>
+      <button class="side-btn" data-view="sources">Sources</button>
+
+      <div class="side-footer">
+        <br>
+      </div>
+    </aside>
+
+    <section class="content">
+      <header class="content-top">
+        <span class="crumb">OVERTONIGHT / BIOGRAPHY</span>
+        <span class="status"><i></i>ARCHIVE ONLINE</span>
+      </header>
+
+      <div class="views">
+
+        <article class="view active" id="overview">
+          <span class="kicker">1 / PROFILE</span>
+          <h2>Stephen Faulkner → overtonight</h2>
+          <div class="hero-grid">
+            <div class="intro-card">
+              <p class="lede"><strong>Stephen Faulkner</strong>, professionally known as <strong>overtonight</strong>, is an artist from Boston, Massachusetts.</p>
+              <p class="copy" style="margin-top:15px">His story is less about a traditional music-industry beginning and more about making things alone, experimenting until something felt right, and gradually turning that private process into a world people could enter.</p>
+              <div class="quote">The origin story is late nights, a car, private SoundCloud links, experimentation, and a project that kept getting bigger.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat"><span>STARTED WRITING</span><strong>Age 16</strong></div>
+              <div class="stat"><span>HOME BASE</span><strong>Boston, MA</strong></div>
+              <div class="stat"><span>EARLY SPACE</span><strong>A car after midnight</strong></div>
+              <div class="stat"><span>EARLY PLATFORM</span><strong>Private SoundCloud</strong></div>
+              <div class="stat"><span>DEBUT ALBUM</span><strong>it's over tonight.</strong></div>
+              <div class="stat"><span>CURRENT ERA</span><strong>ghostland forever</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="view" id="origin">
+          <span class="kicker">2 / ORIGIN</span>
+          <h2>The Beginning</h2>
+          <p class="lede">Before overtonight became a public project, Stephen was writing and recording because he wanted to make music.</p>
+          <h3>Where it started</h3>
+          <p class="copy">He has said that he began writing songs at <strong>16 years old</strong>. The earliest version of the project was intensely DIY: he recorded music <strong>late at night from a car parked in an empty lot</strong>.</p>
+          <p class="copy">Before there was a public audience, music was personal. He has described keeping songs on <strong>private SoundCloud links</strong> and driving around listening to his own recordings.</p>
+          <div class="card-grid">
+            <div class="mini-card"><span>START</span><strong>Writing songs at 16</strong></div>
+            <div class="mini-card"><span>RECORDING</span><strong>Late-night car sessions</strong></div>
+            <div class="mini-card"><span>LISTENING</span><strong>Driving around with his own recordings</strong></div>
+            <div class="mini-card"><span>EARLY AUDIENCE</span><strong>Essentially nobody</strong></div>
+          </div>
+        </article>
+
+        <article class="view" id="early">
+          <span class="kicker">3 / DIY ERA</span>
+          <h2>Before Anyone Was Listening</h2>
+          <p class="copy">Stephen's early approach centered on experimentation, inexpensive recording setups and making songs because they sounded interesting to him. He started with <strong>BandLab</strong> and later moved into more advanced setups, but the roughness of the original process never stopped being important to the sound.</p>
+          <p class="copy">In the interview, he explained that he eventually found himself deliberately making recordings worse because cleaner equipment could make the music feel less immediate. He has returned to <strong>BandLab and Apple-earbud microphones</strong> because the imperfect sound is part of what he calls <strong>“headphone music.”</strong></p>
+          <p class="copy">He also described posting consistently to social media when the numbers were tiny. Some early posts received around <strong>50 views</strong>; one reaching roughly <strong>800 views</strong> felt like a major milestone.</p>
+          <p class="copy">After graduating high school in 2024, he started college but continued building overtonight. He has described making social-media content in places such as <strong>college bathrooms around 3 A.M.</strong> before eventually leaving college after roughly a semester and a half to pursue music.</p>
+          <div class="tags"><span class="tag">DIY</span><span class="tag">SOUNDCLOUD</span><span class="tag">LATE NIGHTS</span><span class="tag">BANDLAB</span><span class="tag">TIKTOK</span><span class="tag">LO-FI</span></div>
+        </article>
+
+        <article class="view" id="timeline">
+          <span class="kicker">4 / TIMELINE</span>
+          <h2>How It Built Up</h2>
+          <div class="timeline">
+            <div class="t-row"><b>AGE 16</b><span>Stephen begins writing songs and developing his own musical identity.</span></div>
+            <div class="t-row"><b>EARLY DIY PERIOD</b><span>Late-night car recordings, private SoundCloud uploads and experimentation across indie, alternative and underground rap.</span></div>
+            <div class="t-row"><b>OCT 24–26, 2024</b><span>Stephen releases the first overtonight song publicly after graduating high school and beginning college.</span></div>
+            <div class="t-row"><b>2025</b><span>The audience grows steadily through consistent releases and social posts; by around summer, Stephen says he had reached roughly 100,000 monthly listeners and a smaller but established core fan base.</span></div>
+            <div class="t-row"><b>LATE 2024 → 2025</b><span>Underground attention grows; label interest follows and overtonight signs with EMPIRE.</span></div>
+            <div class="t-row"><b>JUNE 2025</b><span><em>it's over tonight.</em> arrives as the debut full-length album.</span></div>
+            <div class="t-row"><b>JULY → SEPTEMBER 2025</b><span><em>mirrors demo</em> releases, then breaks out online and dramatically expands the audience.</span></div>
+            <div class="t-row"><b>2026</b><span>The project enters the <em>ghostland forever</em> era and expands into more collaborations and live shows.</span></div>
+          </div>
+        </article>
+
+        <article class="view" id="sound">
+          <span class="kicker">5 / MUSIC</span>
+          <h2>The Sound</h2>
+          <p class="lede">The music crosses several scenes rather than staying inside one genre.</p>
+          <p class="copy" style="margin-top:18px">Overtonight's music crosses <strong>indiecore, alternative/indie rock, bedroom pop, alternative rap and left-field pop</strong>. Public biographies also point to early-2000s pop-punk and modern emo-rap as influences.</p>
+          <p class="copy">His musical path was not linear. He experimented with indie and alternative sounds, became interested in underground/rage rap, learned production through that scene, and later returned to indie and alternative music with those influences still informing the project.</p>
+          <div class="tags"><span class="tag">INDIECORE</span><span class="tag">ALT ROCK</span><span class="tag">POP-PUNK</span><span class="tag">EMO RAP</span><span class="tag">BEDROOM POP</span><span class="tag">ALT RAP</span></div>
+          <h3>Frequently associated tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="mirrors demo" data-spotify-id="1bsbtOYQQ4RxAWPvPWqNiE" tabindex="0" role="button" aria-label="Play mirrors demo"><b>01</b>mirrors demo</div><div class="track" data-song="they'll post it online" data-spotify-id="73JUhnqWsy8YGwpRFdgdVC" tabindex="0" role="button" aria-label="Play they'll post it online"><b>02</b>they'll post it online</div>
+            <div class="track" data-song="shotgun." data-spotify-id="7xyM6OqZmuk4ZiNMVrhx2M" tabindex="0" role="button" aria-label="Play shotgun."><b>03</b>shotgun.</div><div class="track" data-song="twenty four" data-spotify-id="7KVvGiIpMTWQWVsNiymnHS" tabindex="0" role="button" aria-label="Play twenty four"><b>04</b>twenty four</div>
+            <div class="track" data-song="elephant cage" data-spotify-id="2jIS2x5DswnvyYFG0sCPDs" tabindex="0" role="button" aria-label="Play elephant cage"><b>05</b>elephant cage</div><div class="track" data-song="comfort song 4 u" data-spotify-id="4ShNovf95yvRIL1w2TlzPZ" tabindex="0" role="button" aria-label="Play comfort song 4 u"><b>06</b>comfort song 4 u</div>
+            <div class="track" data-song="girl im around u" data-spotify-id="7rhauN3WFwSDiEbHxpIIMM" tabindex="0" role="button" aria-label="Play girl im around u"><b>07</b>girl im around u</div><div class="track" data-song="pls dont die." data-spotify-id="5dVrjOjolDyBwM66vhgiLy" tabindex="0" role="button" aria-label="Play pls dont die."><b>08</b>pls dont die.</div>
+          </div>
+        </article>
+
+        <article class="view" id="method">
+          <span class="kicker">6 / CREATIVE METHOD</span>
+          <h2>Make It Feel Real</h2>
+          <p class="lede">For overtonight, lo-fi isn't simply a limitation — it can be part of the point.</p>
+          <p class="copy" style="margin-top:18px">Stephen described a shift in how he thinks about production. After spending time improving microphones, mixing and recording quality, he felt that some of the music was becoming technically better but emotionally weaker. The solution was to stop treating higher fidelity as automatically better.</p>
+          <p class="copy">He has gone back to the kind of setup he started with, including <strong>BandLab and earbud microphones</strong>, because the rough texture fits the way he hears the project. He described the intended feeling as <strong>“headphone music”</strong> — something made to live with friends, in a car, or in an ordinary moment rather than something that needed to sound like a polished studio production.</p>
+          <div class="card-grid">
+            <div class="mini-card"><span>ORIGINAL TOOL</span><strong>BandLab</strong></div>
+            <div class="mini-card"><span>CURRENT EXPERIMENT</span><strong>Earbud microphones</strong></div>
+            <div class="mini-card"><span>PHILOSOPHY</span><strong>Texture over perfection</strong></div>
+            <div class="mini-card"><span>FORMAT</span><strong>“Headphone music”</strong></div>
+          </div>
+          <h3>Visual language</h3>
+          <p class="copy">The same idea carries into the visuals. Stephen talked about using <strong>old VHS cameras, digicams and even an iPhone 4</strong> for photos and videos, leaning into the nostalgia and candid feeling of older digital media.</p>
+        </article>
+
+        <article class="view" id="releases">
+          <span class="kicker">7 / CATALOG</span>
+          <h2>Releases</h2>
+          <div class="release-tabs">
+            <button class="release-tab active" data-release="debut">it's over tonight.</button>
+            <button class="release-tab" data-release="ghostland">ghostland forever</button>
+          </div>
+
+          <div class="release-panel active" id="debut">
+            <p class="copy"><strong>Released June 6, 2025.</strong> The original album contains nine tracks.</p>
+            <div class="track-grid">
+              <div class="track" data-song="girl i know" data-spotify-id="3O2sLReQZqDKVtF7Z1fSiM" tabindex="0" role="button" aria-label="Play girl i know"><b>1</b>girl i know</div><div class="track" data-song="would u notice" data-spotify-id="1ZOM7lYFpL59AYs3I5ZPfd" tabindex="0" role="button" aria-label="Play would u notice"><b>2</b>would u notice</div>
+              <div class="track" data-song="drinking thinking of me" data-spotify-id="54nn9QxffsrV40KkRk1NDC" tabindex="0" role="button" aria-label="Play drinking thinking of me"><b>3</b>drinking thinking of me</div><div class="track" data-song="dropout" data-spotify-id="6D9TCaXPkl5h5fliIoMiuT" tabindex="0" role="button" aria-label="Play dropout"><b>4</b>dropout</div>
+              <div class="track" data-song="crying inside my room" data-spotify-id="6A73sJlj047eyjzeytrWzD" tabindex="0" role="button" aria-label="Play crying inside my room"><b>5</b>crying inside my room</div><div class="track" data-song="comfort song 4 u" data-spotify-id="4ShNovf95yvRIL1w2TlzPZ" tabindex="0" role="button" aria-label="Play comfort song 4 u"><b>6</b>comfort song 4 u</div>
+              <div class="track" data-song="they'll post it online" data-spotify-id="73JUhnqWsy8YGwpRFdgdVC" tabindex="0" role="button" aria-label="Play they'll post it online"><b>7</b>they'll post it online</div><div class="track" data-song="haunt my home" data-spotify-id="57dsLbBI4grA8mKyz34brR" tabindex="0" role="button" aria-label="Play haunt my home"><b>8</b>haunt my home</div>
+              <div class="track" data-song="downtown baby 2." data-spotify-id="5qOhBheNF07AqDCDWAl2bt" tabindex="0" role="button" aria-label="Play downtown baby 2."><b>9</b>downtown baby 2.</div>
+            </div>
+          </div>
+
+          <div class="release-panel" id="ghostland">
+            <p class="copy"><strong>Released August 28, 2026.</strong> An 18-track album representing the project's current era.</p>
+            <div class="track-grid">
+              <div class="track" data-song="i can't do it again" data-spotify-id="2ShDVjP0zdJqF0sLTq7vk8" tabindex="0" role="button" aria-label="Play i can't do it again"><b>1</b>i can't do it again</div><div class="track" data-song="coffin rock" data-spotify-id="2dfYDWkF3Ei3n3ixvAv166" tabindex="0" role="button" aria-label="Play coffin rock"><b>2</b>coffin rock</div>
+              <div class="track" data-song="that girl a stalker" data-spotify-id="3IWuc0GVwKFsSulgqt3Qth" tabindex="0" role="button" aria-label="Play that girl a stalker"><b>3</b>that girl a stalker</div><div class="track" data-song="can't compete — Tommy Ragen" data-spotify-id="0KqWCQrz7f9vkumf0odaSL" tabindex="0" role="button" aria-label="Play can't compete — Tommy Ragen"><b>4</b>can't compete — Tommy Ragen</div>
+              <div class="track" data-song="evil woman" data-spotify-id="3LvDGZJc2pHadwnAVa2VnX" tabindex="0" role="button" aria-label="Play evil woman"><b>5</b>evil woman</div><div class="track" data-song="summer crush" data-spotify-id="0mGitkQa0UmdMZ2f83rMa7" tabindex="0" role="button" aria-label="Play summer crush"><b>6</b>summer crush</div>
+              <div class="track" data-song="my music's violent — kaysnoto" data-spotify-id="03P5uI374U5D6nuKl9nyVO" tabindex="0" role="button" aria-label="Play my music's violent — kaysnoto"><b>7</b>my music's violent — kaysnoto</div><div class="track" data-song="ghost party" data-spotify-id="4RHQfD5vr5w3dOU7aDpTzd" tabindex="0" role="button" aria-label="Play ghost party"><b>8</b>ghost party</div>
+              <div class="track" data-song="kill stephen" data-spotify-id="0pqCTLWlbyHcgOW2I3F13S" tabindex="0" role="button" aria-label="Play kill stephen"><b>9</b>kill stephen</div><div class="track" data-song="uncle sam" data-spotify-id="3BJ57RrmPaTl1OjbAUkPxy" tabindex="0" role="button" aria-label="Play uncle sam"><b>10</b>uncle sam</div>
+              <div class="track" data-song="bug love interlude — never goodbye" data-spotify-id="62aew9oAjUFKpGdPeZ4AgH" tabindex="0" role="button" aria-label="Play bug love interlude — never goodbye"><b>11</b>bug love interlude — never goodbye</div><div class="track" data-song="youtube" data-spotify-id="27Upwxwbn0yKyrGACzYnIy" tabindex="0" role="button" aria-label="Play youtube"><b>12</b>youtube</div>
+              <div class="track" data-song="control of u — Xavier Wulf" data-spotify-id="6QhVpBcNhA5ug0b7fSnnmc" tabindex="0" role="button" aria-label="Play control of u — Xavier Wulf"><b>13</b>control of u — Xavier Wulf</div><div class="track" data-song="bleeding w/kxll — KXLLSWXTCH" data-spotify-id="4sdVHgg7mYVEk9paUHJGhn" tabindex="0" role="button" aria-label="Play bleeding w/kxll — KXLLSWXTCH"><b>14</b>bleeding w/kxll — KXLLSWXTCH</div>
+              <div class="track" data-song="denim jeanz" data-spotify-id="3X98SL13a4C4YV5YHw9NLe" tabindex="0" role="button" aria-label="Play denim jeanz"><b>15</b>denim jeanz</div><div class="track" data-song="SHUT UP" data-spotify-id="7Cvw0NRne8Ceh5aw9QP5s8" tabindex="0" role="button" aria-label="Play SHUT UP"><b>16</b>SHUT UP</div>
+              <div class="track" data-song="peaky blinders — ThxSoMch" data-spotify-id="2pRx4s6aGkyXFXgVdAYVx5" tabindex="0" role="button" aria-label="Play peaky blinders — ThxSoMch"><b>17</b>peaky blinders — ThxSoMch</div><div class="track" data-song="elevator scary" data-spotify-id="2WaP1NQiDypsQOquFP2NQu" tabindex="0" role="button" aria-label="Play elevator scary"><b>18</b>elevator scary</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="view" id="breakout">
+          <span class="kicker">8 / BREAKOUT</span>
+          <h2><em>mirrors demo</em></h2>
+          <p class="lede">One song became the entrance to a much larger world.</p>
+          <p class="copy" style="margin-top:18px">Released in July 2025, <strong>mirrors demo</strong> became one of the defining songs of the project.</p>
+          <p class="copy">Stephen has described the track's later online explosion as a turning point. Released in <strong>July 2025</strong>, it initially sat on the overtonight throwaways account before a TikTok post around September pushed it into a much wider audience. He described its growth from roughly <strong>1,000 daily streams</strong> to around <strong>500,000 daily streams at its peak</strong>.</p>
+          <p class="copy">At the same time, <strong>“Shotgun.”</strong> was taking off on Instagram Reels, giving the project a second viral path outside TikTok. Stephen's point was that the breakout worked because there was already a deeper catalog waiting behind it.</p>
+          <p class="copy">In the interview, he said the song's strange structure — including the way it slows at the end — felt distinctly like overtonight. That helped turn a viral moment into curiosity about the rest of the catalog rather than leaving listeners with only one hit.</p>
+          <div class="card-grid">
+            <div class="mini-card"><span>PRE-BREAKOUT</span><strong>~100K monthly listeners</strong></div>
+            <div class="mini-card"><span>START</span><strong>~1K daily streams</strong></div>
+            <div class="mini-card"><span>PEAK</span><strong>~500K daily streams</strong></div>
+            <div class="mini-card"><span>SECOND WAVE</span><strong>“Shotgun.” on Instagram Reels</strong></div>
+          </div>
+          <div class="quote">THE BREAKOUT IDEA — ONE SONG SHOULD LEAD TO A WHOLE RABBIT HOLE.</div>
+        </article>
+
+        <article class="view" id="influences">
+          <span class="kicker">9 / INFLUENCES</span>
+          <h2>Where The Sound Comes From</h2>
+          <p class="copy">Public venue and music biographies associate overtonight with a mixture of <strong>early-2000s pop-punk/alternative rock</strong> and modern emo-rap.</p>
+          <div class="tags"><span class="tag">GREEN DAY</span><span class="tag">ALL AMERICAN REJECTS</span><span class="tag">GOOD CHARLOTTE</span><span class="tag">XXXTENTACION</span><span class="tag">JUICE WRLD</span></div>
+          <p class="copy">Stephen's own account adds another layer: his experimentation with underground/rage rap wasn't separate from the later alternative sound; he considers that period part of how he learned to produce and shape music.</p>
+          <p class="copy">He also connects the project's visual language to a broader nostalgia for older digital media: <strong>VHS cameras, digicams, old-phone photos and deliberately imperfect video</strong> can feel more immediate to him than pristine modern footage.</p>
+        </article>
+
+        <article class="view" id="collabs">
+          <span class="kicker">10 / NETWORK</span>
+          <h2>Collaborators</h2>
+          <p class="copy">Release credits and connected releases link overtonight to a wider circle of artists, producers, writers, and collaborators. Platform buttons below only point to profiles I could verify; credits are separated from discovery links so the archive does not overstate anyone's role.</p>
+          <div class="collabs">
+            <div class="collab"><span class="collab-name">William Cameron</span><span class="collab-role">Credit / collaborator</span><div class="collab-note">Listed in the archive's collaborator network; no platform profile confidently verified.</div></div>
+            <div class="collab"><span class="collab-name">Prod. Peril</span><span class="collab-role">Producer</span><div class="collab-links"><a href="https://prodperil.com/" target="_blank" rel="noopener">Website</a><a href="https://music.apple.com/us/artist/prod-peril/1582393561" target="_blank" rel="noopener">Apple Music</a></div><div class="collab-note">Producer credit / independent beat platform.</div></div>
+            <div class="collab"><span class="collab-name">Stephen Fealy III</span><span class="collab-role">Writer / music credit</span><div class="collab-note">Credited in the deluxe-era songwriting/production trail; no platform profile confidently verified.</div></div>
+            <div class="collab"><span class="collab-name">Tommy Ragen</span><span class="collab-role">Featured artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/7k8S06V36x8zYOwtn6zl9K" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Collaborated with overtonight on “memory” and appears on the live tour schedule.</div></div>
+            <div class="collab"><span class="collab-name">kaysnoto</span><span class="collab-role">Featured artist / collaborator</span><div class="collab-links"><a href="https://open.spotify.com/artist/4F5j57znw5bPFjrZzXfDNt" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Appears with overtonight on “special little notes,” “sorry i killed her.” and other releases.</div></div>
+            <div class="collab"><span class="collab-name">Xavier Wulf</span><span class="collab-role">Featured artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/3uo0ix4Y67XHVWBhXXIY1S" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Featured on “control of u” on ghostland forever.</div></div>
+            <div class="collab"><span class="collab-name">KXLLSWXTCH</span><span class="collab-role">Featured artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/2VDZoCBGjxbHJbnzSX5nP6" target="_blank" rel="noopener">Spotify</a><a href="https://www.youtube.com/@kxllswxtch" target="_blank" rel="noopener">YouTube</a></div><div class="collab-note">Featured on “bleeding w/kxll” and collaborated with overtonight on “jester.”</div></div>
+            <div class="collab"><span class="collab-name">ThxSoMch</span><span class="collab-role">Featured artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/4MvZhE1iuzttcoyepkpfdF" target="_blank" rel="noopener">Spotify</a><a href="https://www.youtube.com/@ThxSoMch" target="_blank" rel="noopener">YouTube</a></div><div class="collab-note">Featured on “peaky blinders” on ghostland forever.</div></div>
+            <div class="collab"><span class="collab-name">never goodbye</span><span class="collab-role">Featured artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/4Qqzm4FXFUgM5Ml09HRn6b" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Featured on “bug love interlude” and “i hait it” with overtonight.</div></div>
+            <div class="collab"><span class="collab-name">Boysarerollingmusic</span><span class="collab-role">Music credit</span><div class="collab-note">Appears in the credits trail around “crying inside my room”; no platform profile confidently verified.</div></div>
+            <div class="collab"><span class="collab-name">Arno Sugarman</span><span class="collab-role">Songwriting credit</span><div class="collab-note">Credited in the songwriting trail for the early overtonight catalog; no platform profile confidently verified.</div></div>
+            <div class="collab"><span class="collab-name">Stephenthethird</span><span class="collab-role">Producer</span><div class="collab-note">Producer / studio collaborator connected to the overtonight catalog; no platform profile confidently verified.</div></div>
+            <div class="collab"><span class="collab-name">woryies</span><span class="collab-role">Featured / archive collaborator</span><div class="collab-note">Appears with overtonight on the throwaways/archive collaboration “im on earth again.”</div></div>
+            <div class="collab"><span class="collab-name">Paloma</span><span class="collab-role">Producer</span><div class="collab-note">Credited as producer on overtonight's “make it out the underground.”</div></div>
+            <div class="collab"><span class="collab-name">everestdidthis</span><span class="collab-role">Producer</span><div class="collab-links"><a href="https://www.everestdidthis.com/" target="_blank" rel="noopener">Website</a></div><div class="collab-note">Producer / beatmaker; maintains an independent beat store and production catalog.</div></div>
+            <div class="collab"><span class="collab-name">nicosbands</span><span class="collab-role">Associated artist</span><div class="collab-links"><a href="https://open.spotify.com/artist/7GHLrloLGQ5eKtC0HaI43T" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Connected through the wider overtonight / indie-underground collaboration circle.</div></div>
+            <div class="collab"><span class="collab-name">gyaru</span><span class="collab-role">Featured / collaborator</span><div class="collab-note">Appears on “ive been feeling lost” alongside overtonight, kaysnoto, creepies and im secretly a ghost.</div></div>
+            <div class="collab"><span class="collab-name">creepies</span><span class="collab-role">Featured artist</span><div class="collab-links"></div><div class="collab-note">The Spotify artist page was not reliably exposed in search. Collaborated on “ive been feeling lost” and “Peace of Mind.”</div></div>
+            <div class="collab"><span class="collab-name">im secretly a ghost</span><span class="collab-role">Featured artist / collaborator</span><div class="collab-links"><a href="https://open.spotify.com/artist/1wBB0PluVTbvu9U1IFEN2i" target="_blank" rel="noopener">Spotify</a></div><div class="collab-note">Worked with overtonight on “do you really wanna kill me,” “did you want him instead” and “ive been feeling lost.”</div></div>
+          </div>
+        </article>
+
+        <article class="view" id="lore">
+          <span class="kicker">11 / LORE</span>
+          <h2>The Rabbit Hole</h2>
+          <p class="lede">The project was designed to feel larger than a discography.</p>
+          <p class="copy" style="margin-top:18px">Stephen has explained that he wanted the project to be more than a single viral track. He spent time building <strong>songs, videos, leaks, images, social posts and lore</strong> so that discovering one song could lead listeners deeper into the project.</p>
+          <p class="copy">He also wanted to show his face early rather than hiding behind anonymity, even though face-less presentation is common in parts of the underground scene.</p>
+          <p class="copy">The rough visual and audio material became part of the identity instead of being treated as disposable early work.</p>
+          <div class="quote">The “rabbit hole” is the idea that the first song is only the entrance — there is always another track, video, post or piece of history waiting underneath it.</div>
+        </article>
+
+        <article class="view" id="current">
+          <span class="kicker">12 / CURRENT</span>
+          <h2><em>ghostland forever</em></h2>
+          <p class="lede">The current chapter expands the music, visual identity, collaborations and live world around overtonight.</p>
+          <p class="copy" style="margin-top:18px">The current chapter is built around <strong><em>ghostland forever</em></strong>, an 18-track album released August 28, 2026.</p>
+          <p class="copy">The record expands the project's darker visual and musical identity while bringing in a wider set of collaborators.</p>
+          <p class="copy">An important interview snapshot from this era: Stephen said <strong>mirrors demo</strong> was already above <strong>80 million Spotify streams</strong> and over <strong>100 million streams across platforms</strong>, while his next personal milestone was seeing 100 million on Spotify itself. These numbers are preserved here as the interview-era snapshot, not as a live counter.</p>
+          <div class="card-grid">
+            <div class="mini-card"><span>ERA</span><strong>Ghostland</strong></div>
+            <div class="mini-card"><span>ALBUM</span><strong>18 tracks</strong></div>
+            <div class="mini-card"><span>RELEASE</span><strong>August 28, 2026</strong></div>
+            <div class="mini-card"><span>FOCUS</span><strong>Music + lore + live shows</strong></div>
+          </div>
+        </article>
+
+        <article class="view" id="throwaways">
+          <span class="kicker">13 / ARCHIVE</span>
+          <h2><em>overtonight throwaways</em></h2>
+          <p class="lede">The archive account on Spotify preserves demos, alternate versions, short experiments, and releases outside the main overtonight discography.</p>
+          <p class="copy" style="margin-top:18px">The current Spotify archive catalog includes <strong>SWAT</strong>, <strong>confetti</strong>, <strong>hell tapes</strong>, <strong>archive basket 1</strong>, <strong>STAB</strong>, <strong>mirrors demo (slowed)</strong>, <strong>mirrors demo (funk remix)</strong>, plus archive singles and collaborations. The sections below list the songs currently documented from the archive catalog.</p>
+
+          <div class="card-grid">
+            <div class="mini-card"><span>ACCOUNT</span><strong>overtonight throwaways</strong></div>
+            <div class="mini-card"><span>SPOTIFY</span><strong>2M+ monthly listeners</strong></div>
+            <div class="mini-card"><span>CORE ARCHIVE</span><strong>SWAT · confetti · hell tapes</strong></div>
+            <div class="mini-card"><span>DEEP CUTS</span><strong>archive basket 1 · STAB · remixes</strong></div>
+          </div>
+
+          <h3>SWAT — 7 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="girl im around u" data-spotify-id="7rhauN3WFwSDiEbHxpIIMM" tabindex="0" role="button" aria-label="Play girl im around u"><b>01</b>girl im around u</div>
+            <div class="track" data-song="i wanna go to miami" tabindex="0" role="button" aria-label="Play i wanna go to miami" data-spotify-id="20vrVixcYvTAfkwi6fxuqu"><b>02</b>i wanna go to miami</div>
+            <div class="track" data-song="red eyes" data-spotify-id="02rZCNXHwwC7OsGFdvyhB8" tabindex="0" role="button" aria-label="Play red eyes"><b>03</b>red eyes</div>
+            <div class="track" data-song="dreamer girl" tabindex="0" role="button" aria-label="Play dreamer girl" data-spotify-id="7GPn3vILhWitQk13wyX1Tt"><b>04</b>dreamer girl</div>
+            <div class="track" data-song="akg freestyle" tabindex="0" role="button" aria-label="Play akg freestyle" data-spotify-id="5bztTlvHjuCGLM5aHovd5u"><b>05</b>akg freestyle</div>
+            <div class="track" data-song="mirrors demo" data-spotify-id="1bsbtOYQQ4RxAWPvPWqNiE" tabindex="0" role="button" aria-label="Play mirrors demo"><b>06</b>mirrors demo</div>
+            <div class="track" data-song="adventure (feat. overtonight)" tabindex="0" role="button" aria-label="Play adventure (feat. overtonight)" data-spotify-id="0y7GacUFQkVdmhPiYcYKJy"><b>07</b>adventure (feat. overtonight)</div>
+          </div>
+
+          <h3>confetti — 8 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="green eyed girl" data-spotify-id="6ua0UV47ukBsvQuufoLrJe" tabindex="0" role="button" aria-label="Play green eyed girl"><b>01</b>green eyed girl</div>
+            <div class="track" data-song="ghost boy ot" data-spotify-id="2gFp9GrHXOiIJ2FNBhPS1a" tabindex="0" role="button" aria-label="Play ghost boy ot"><b>02</b>ghost boy ot</div>
+            <div class="track" data-song="i can see your evil soul" data-spotify-id="6CrNgBRzovMUFC5Y94qvB1" tabindex="0" role="button" aria-label="Play i can see your evil soul"><b>03</b>i can see your evil soul</div>
+            <div class="track" data-song="if i lose her its wraps" tabindex="0" role="button" aria-label="Play if i lose her its wraps" data-spotify-id="0YCONxqwBW4A087K87grKw"><b>04</b>if i lose her its wraps</div>
+            <div class="track" data-song="shotgun. - slowed" data-spotify-id="6p2uesTw5sWBTQhD7YDfVK" tabindex="0" role="button" aria-label="Play shotgun. - slowed"><b>05</b>shotgun. - slowed</div>
+            <div class="track" data-song="downtown baby 2. - sped up" tabindex="0" role="button" aria-label="Play downtown baby 2. - sped up" data-spotify-id="72md0aHBvyw8gqoHVOCYNB"><b>06</b>downtown baby 2. - sped up</div>
+            <div class="track" data-song="they'll post it online - slowed" tabindex="0" role="button" aria-label="Play they'll post it online - slowed" data-spotify-id="1IhZIb9gImg3jjbpm2LD2H"><b>07</b>they'll post it online - slowed</div>
+            <div class="track" data-song="i'm the fucking loser this time - slowed" tabindex="0" role="button" aria-label="Play i'm the fucking loser this time - slowed" data-spotify-id="06Bsh982VWWFdYA5AZ34L7"><b>08</b>i'm the fucking loser this time - slowed</div>
+          </div>
+
+          <h3>hell tapes — 8 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="i wanna be your favorite boy" data-spotify-id="7ekFGQn9lDP8k1Jx4QqU6U" tabindex="0" role="button" aria-label="Play i wanna be your favorite boy"><b>01</b>i wanna be your favorite boy</div>
+            <div class="track" data-song="that boy is dead" data-spotify-id="5LmgfEH9Tj8VSSCJAX65A1" tabindex="0" role="button" aria-label="Play that boy is dead"><b>02</b>that boy is dead</div>
+            <div class="track" data-song="living to pay off vacation" tabindex="0" role="button" aria-label="Play living to pay off vacation" data-spotify-id="4itgxgmAvEeGswRxGDIY0W"><b>03</b>living to pay off vacation</div>
+            <div class="track" data-song="oh yeah i love music" tabindex="0" role="button" aria-label="Play oh yeah i love music" data-spotify-id="3jT6GQiwvnC9fLYIbtP6qM"><b>04</b>oh yeah i love music</div>
+            <div class="track" data-song="im on earth again (feat. woryies)" tabindex="0" role="button" aria-label="Play im on earth again (feat. woryies)" data-spotify-id="3GcdUFmsXaxyZeYFwF2Smt"><b>05</b>im on earth again (feat. woryies)</div>
+            <div class="track" data-song="when she come back to you" tabindex="0" role="button" aria-label="Play when she come back to you" data-spotify-id="1jKWzxLIY347qSNI2kPQdP"><b>06</b>when she come back to you</div>
+            <div class="track" data-song="im in nyc" data-spotify-id="0ksuDG0dwqwAAbWunPRhIg" tabindex="0" role="button" aria-label="Play im in nyc"><b>07</b>im in nyc</div>
+            <div class="track" data-song="monday man" data-spotify-id="0215JHVOGvPS8ldM0BEPsY" tabindex="0" role="button" aria-label="Play monday man"><b>08</b>monday man</div>
+          </div>
+
+          <h3>archive basket 1 — 5 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="narnia" data-spotify-id="0KGCRvxFWt4sI9Fl0xKQvf" tabindex="0" role="button" aria-label="Play narnia"><b>01</b>narnia</div>
+            <div class="track" data-song="beat me down to death" data-spotify-id="1oTQhkVDsfkIFp1qN9R7Gf" tabindex="0" role="button" aria-label="Play beat me down to death"><b>02</b>beat me down to death</div>
+            <div class="track" data-song="tricks u do" tabindex="0" role="button" aria-label="Play tricks u do" data-spotify-id="5hHMfyka8bGfFoZmIvtp2z"><b>03</b>tricks u do</div>
+            <div class="track" data-song="missing" data-spotify-id="7irQoR2ijjfdfObMccTIrB" tabindex="0" role="button" aria-label="Play missing"><b>04</b>missing</div>
+            <div class="track" data-song="iphone rock (feat. overtonight)" data-spotify-id="0Y68Bxq3ejhufChQa9KjtI" tabindex="0" role="button" aria-label="Play iphone rock (feat. overtonight)"><b>05</b>iphone rock (feat. overtonight)</div>
+          </div>
+
+          <h3>STAB — 3 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="fool" tabindex="0" role="button" aria-label="Play fool" data-spotify-id="4ypkGHsKklikcjwk8KdkcE"><b>01</b>fool</div>
+            <div class="track" data-song="care bout me" data-spotify-id="5thuu0lz37kavZejLDNLvT" tabindex="0" role="button" aria-label="Play care bout me"><b>02</b>care bout me</div>
+            <div class="track" data-song="family function floor (feat. overtonight)" tabindex="0" role="button" aria-label="Play family function floor (feat. overtonight)" data-spotify-id="4Grl3PyvtRudPcpiSWgkBZ"><b>03</b>family function floor (feat. overtonight)</div>
+          </div>
+
+          <h3>mirrors demo (slowed) — 2 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="mirrors demo" data-spotify-id="1bsbtOYQQ4RxAWPvPWqNiE" tabindex="0" role="button" aria-label="Play mirrors demo"><b>01</b>mirrors demo</div>
+            <div class="track" data-song="mirrors demo - slowed" data-spotify-id="0YbhQMTXY57JUjCKZDMjsr" tabindex="0" role="button" aria-label="Play mirrors demo - slowed"><b>02</b>mirrors demo - slowed</div>
+          </div>
+
+          <h3>mirrors demo (funk remix) — 5 tracks</h3>
+          <div class="track-grid">
+            <div class="track" data-song="mirrors demo - funk" tabindex="0" role="button" aria-label="Play mirrors demo - funk" data-spotify-id="4wajc5VOoko25jDrLOGNxY"><b>01</b>mirrors demo - funk</div>
+            <div class="track" data-song="mirrors demo - funk sped up" tabindex="0" role="button" aria-label="Play mirrors demo - funk sped up" data-spotify-id="298nuq3VMLriH0D31mowIZ"><b>02</b>mirrors demo - funk sped up</div>
+            <div class="track" data-song="mirrors demo - funk slowed" data-spotify-id="7tiOsv0HFyGWdrCIT3JSoY" tabindex="0" role="button" aria-label="Play mirrors demo - funk slowed"><b>03</b>mirrors demo - funk slowed</div>
+            <div class="track" data-song="mirrors demo - funk super slowed" data-spotify-id="5NOAvFTbyPquciZLSk1XjX" tabindex="0" role="button" aria-label="Play mirrors demo - funk super slowed"><b>04</b>mirrors demo - funk super slowed</div>
+            <div class="track" data-song="mirrors demo - funk ultra slowed" data-spotify-id="44G9zBqf7cG8nY22WuI56m" tabindex="0" role="button" aria-label="Play mirrors demo - funk ultra slowed"><b>05</b>mirrors demo - funk ultra slowed</div>
+          </div>
+
+          <h3>Other archive releases</h3>
+          <div class="track-grid">
+            <div class="track" data-song="iraq" tabindex="0" role="button" aria-label="Play iraq" data-spotify-id="7KXCtv1AIFo7NkAHLYbP87"><b>01</b>iraq</div>
+            <div class="track" data-song="lost at the disco (feat. overtonight)" tabindex="0" role="button" aria-label="Play lost at the disco (feat. overtonight)" data-spotify-id="4aexmlBArDbSyWnlpPaVXD"><b>02</b>lost at the disco (feat. overtonight)</div>
+            <div class="track" data-song="kaysnoto type beat (feat. overtonight)" tabindex="0" role="button" aria-label="Play kaysnoto type beat (feat. overtonight)" data-spotify-id="3KhjXKHGeCbfs571tZNC6v"><b>03</b>kaysnoto type beat (feat. overtonight)</div>
+          </div>
+
+          <p class="copy" style="margin-top:18px">Spotify's current archive profile also lists the releases above in its discography; the public “This Is overtonight throwaways” playlist contains 29 of the archive's key tracks. <a href="https://open.spotify.com/artist/5d1xapXUqUmq0CpozCAhr7" target="_blank" rel="noopener" style="color:#fff">Open the full archive profile ↗</a></p>
+        </article>
+
+        <article class="view" id="sources">
+          <span class="kicker">14 / SOURCES</span>
+          <h2>Where The Story Comes From</h2>
+          <p class="copy">The biography distinguishes direct statements from databases and third-party descriptions. The strongest source for the new first-person details is Stephen's own 2026 interview; those sections are written as interview-derived statements rather than outside claims.</p>
+          <a class="source" href="https://www.overtonight.com/" target="_blank" rel="noopener">OFFICIAL SITE — overtonight.com ↗</a>
+          <a class="source" href="https://www.buzzsprout.com/2573404/episodes/19632736-overtonight" target="_blank" rel="noopener">2026 INTERVIEW — Buzzsprout / overtonight ↗</a>
+          <a class="source" href="https://music.apple.com/us/artist/overtonight/1775307013" target="_blank" rel="noopener">MUSIC CATALOG — Apple Music ↗</a>
+          <a class="source" href="https://overtonight.bandcamp.com/" target="_blank" rel="noopener">MUSIC CATALOG — Bandcamp ↗</a>
+          <a class="source" href="https://www.allmusic.com/artist/overtonight-mn0004820728" target="_blank" rel="noopener">MUSIC DATABASE — AllMusic ↗</a>
+        </article>
+
+      </div>
+    </section>
+  </section>
+</main>
+
+
+<script>
+/* Collaborator profile popup — click any collaborator card to reveal verified platform links. */
+const collabModal = document.getElementById("collabModal");
+const collabModalTitle = document.getElementById("collabModalTitle");
+const collabModalRole = document.getElementById("collabModalRole");
+const collabModalNote = document.getElementById("collabModalNote");
+const collabModalLinks = document.getElementById("collabModalLinks");
+const collabModalEmpty = document.getElementById("collabModalEmpty");
+const collabModalClose = document.getElementById("collabModalClose");
+
+function openCollaborator(collab){
+  const name = collab.querySelector(".collab-name")?.textContent.trim() || "Collaborator";
+  const role = collab.querySelector(".collab-role")?.textContent.trim() || "Credit";
+  const note = collab.querySelector(".collab-note")?.textContent.trim() || "";
+  const links = [...collab.querySelectorAll(".collab-links a")];
+
+  collabModalTitle.textContent = name;
+  collabModalRole.textContent = role;
+  collabModalNote.textContent = note;
+  collabModalLinks.innerHTML = "";
+
+  links.forEach(link => {
+    const a = document.createElement("a");
+    a.href = link.href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = link.textContent.trim() + " ↗";
+    collabModalLinks.appendChild(a);
+  });
+
+  collabModalEmpty.style.display = links.length ? "none" : "block";
+  collabModal.classList.add("open");
+  collabModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCollaborator(){
+  collabModal.classList.remove("open");
+  collabModal.setAttribute("aria-hidden", "true");
+  collabModalLinks.innerHTML = "";
+  document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".collab").forEach(collab => {
+  collab.setAttribute("tabindex", "0");
+  collab.setAttribute("role", "button");
+  collab.addEventListener("click", e => {
+    if (e.target.closest("a")) return;
+    openCollaborator(collab);
+  });
+  collab.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openCollaborator(collab);
+    }
+  });
+});
+
+collabModalClose.addEventListener("click", closeCollaborator);
+collabModal.addEventListener("click", e => {
+  if (e.target === collabModal) closeCollaborator();
+});
+
+</script>
+
+<script>
+/* Spotify track popup — every biography/throwaways track card is wired to its exact Spotify track ID. */
+const spotifyModal = document.getElementById("spotifyModal");
+const spotifyEmbed = document.getElementById("spotifyEmbed");
+const spotifyModalTitle = document.getElementById("spotifyModalTitle");
+const spotifyModalClose = document.getElementById("spotifyModalClose");
+
+function openSpotifySong(trackEl){
+  const trackId = trackEl.dataset.spotifyId;
+  const songName = trackEl.dataset.song || trackEl.textContent.replace(/^\s*\d+\s*/, "").trim();
+  if (!trackId) return;
+
+  spotifyModalTitle.textContent = songName + " — Spotify";
+  spotifyEmbed.src = "https://open.spotify.com/embed/track/" + encodeURIComponent(trackId) + "?utm_source=generator&theme=0";
+  spotifyModal.classList.add("open");
+  spotifyModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSpotifySong(){
+  spotifyModal.classList.remove("open");
+  spotifyModal.setAttribute("aria-hidden", "true");
+  spotifyEmbed.src = "about:blank";
+  document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".track[data-spotify-id]").forEach(track => {
+  track.addEventListener("click", () => openSpotifySong(track));
+  track.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openSpotifySong(track);
+    }
+  });
+});
+
+spotifyModalClose.addEventListener("click", closeSpotifySong);
+spotifyModal.addEventListener("click", e => {
+  if (e.target === spotifyModal) closeSpotifySong();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSpotifySong();
+});
+</script>
+
+<script>
+const buttons = document.querySelectorAll(".side-btn");
+const views = document.querySelectorAll(".view");
+
+function showView(id){
+  views.forEach(v => v.classList.toggle("active", v.id === id));
+  buttons.forEach(b => b.classList.toggle("active", b.dataset.view === id));
+}
+buttons.forEach(b => b.addEventListener("click", () => showView(b.dataset.view)));
+
+const releaseTabs = document.querySelectorAll(".release-tab");
+const releasePanels = document.querySelectorAll(".release-panel");
+releaseTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    releaseTabs.forEach(t => t.classList.remove("active"));
+    releasePanels.forEach(p => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.release).classList.add("active");
+  });
+});
+</script>
+
+    <script>
+    const navToggle = document.querySelector(".nav-toggle");
+    const siteNav = document.querySelector(".site-nav");
+    if (navToggle && siteNav) {
+        navToggle.addEventListener("click", () => {
+            const open = navToggle.getAttribute("aria-expanded") === "true";
+            navToggle.setAttribute("aria-expanded", String(!open));
+            siteNav.classList.toggle("open", !open);
+        });
+        document.addEventListener("click", (event) => {
+            if (!siteNav.contains(event.target)) {
+                navToggle.setAttribute("aria-expanded", "false");
+                siteNav.classList.remove("open");
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service</title>
+
+<meta
+    name="description"
+    content="Terms of Service Agreement For Fye"
+>
+
+<meta
+    name="robots"
+    content="index, follow"
+>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+
+        background: #000;
+        color: #fff;
+
+        font-family: Arial, sans-serif;
+
+        cursor: crosshair;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .site-nav {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+
+        z-index: 3500;
+    }
+
+    .nav-toggle {
+        appearance: none;
+
+        background: #000;
+        color: #fff;
+
+        border: 1px solid #fff;
+
+        padding: 12px 18px;
+
+        font-size: 14px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .nav-toggle:hover,
+    .nav-toggle:focus-visible {
+        background: #fff;
+        color: #000;
+
+        outline: none;
+    }
+
+    .nav-menu {
+        position: absolute;
+
+        top: calc(100% + 8px);
+        left: 0;
+
+        min-width: 220px;
+
+        background: #000;
+
+        border: 1px solid #fff;
+
+        display: none;
+    }
+
+    .site-nav:hover .nav-menu,
+    .site-nav:focus-within .nav-menu {
+        display: block;
+    }
+
+    .nav-menu a {
+        display: block;
+
+        padding: 10px 14px;
+
+        color: #fff;
+        text-decoration: none;
+
+        font-size: 13px;
+        letter-spacing: 0.5px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .nav-menu a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        background: #fff;
+        color: #000;
+    }
+
+    /* =========================
+       TERMS OF SERVICE
+    ========================= */
+
+    .tos-wrapper {
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 100px 25px 60px;
+    }
+
+    .tos-container {
+        width: 100%;
+        max-width: 900px;
+
+        padding: 45px;
+
+        border: 1px solid rgba(255, 255, 255, 0.35);
+
+        background: rgba(0, 0, 0, 0.92);
+
+        box-shadow:
+            0 0 30px rgba(255, 255, 255, 0.05);
+    }
+
+    .tos-title {
+        margin-bottom: 30px;
+
+        text-align: center;
+
+        font-size: 28px;
+        line-height: 1.3;
+
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .tos-introduction {
+        margin-bottom: 28px;
+
+        font-size: 15px;
+        line-height: 1.8;
+
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .tos-section {
+        margin-bottom: 25px;
+    }
+
+    .tos-section h2 {
+        margin-bottom: 9px;
+
+        font-size: 17px;
+        line-height: 1.4;
+
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+    }
+
+    .tos-section p {
+        font-size: 15px;
+        line-height: 1.8;
+
+        color: rgba(255, 255, 255, 0.88);
+    }
+
+    .tos-final {
+        margin-top: 30px;
+        padding-top: 25px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+        font-size: 15px;
+        line-height: 1.8;
+
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .site-nav {
+            top: 12px;
+            left: 12px;
+        }
+
+        .nav-toggle {
+            padding: 10px 14px;
+            font-size: 12px;
+        }
+
+        .nav-menu {
+            min-width: 190px;
+        }
+
+        .tos-wrapper {
+            padding: 85px 15px 35px;
+        }
+
+        .tos-container {
+            padding: 25px 20px;
+        }
+
+        .tos-title {
+            font-size: 21px;
+            letter-spacing: 2px;
+        }
+
+        .tos-section h2 {
+            font-size: 15px;
+        }
+
+        .tos-section p,
+        .tos-introduction,
+        .tos-final {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     TERMS OF SERVICE
+========================= -->
+
+<main class="tos-wrapper">
+
+    <article class="tos-container">
+
+        <h1 class="tos-title">
+          Fye Discord Bot Terms of Service Agreement
+        </h1>
+
+        <p class="tos-introduction">
+            This Terms of Service Agreement is entered
+            into  between the user of the Fye Discord bot.
+            By using the Bot, the User agrees to be bound by the terms
+            of this Agreement. If the User does not agree to the terms
+            of this Agreement, they should immediately discontinue use
+            of the Bot.
+        </p>
+
+
+        <section class="tos-section">
+
+            <h2>
+                1. Use of the Bot
+            </h2>
+
+            <p>
+                The Bot Owner grants the User a non-exclusive,
+                non-transferable, limited license to use the Bot for
+                personal or non-commercial purposes.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                2. Prohibited Use
+            </h2>
+
+            <p>
+                The User may not use the Bot in any way that violates
+                applicable laws, rules, or regulations or infringes upon
+                the rights of any third party. The User may not use the
+                Bot for any commercial purposes without the express
+                written consent of the Bot Owner.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                3. Limitation of Liability
+            </h2>
+
+            <p>
+                The Bot Owner shall not be liable for any damages arising
+                out of the use or inability to use the Bot, including but
+                not limited to, damages for loss of profits, loss of data,
+                or other intangible losses.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                4. Modifications to the Bot
+            </h2>
+
+            <p>
+                The Bot Owner may modify or discontinue the Bot at any
+                time without notice. The User agrees that the Bot Owner
+                shall not be liable to the User or any third party for
+                any modification, suspension, or discontinuance of the Bot.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                5. Intellectual Property
+            </h2>
+
+            <p>
+                The Bot and all intellectual property rights therein are
+                and shall remain the property of the Bot Owner. The User
+                agrees not to copy, modify, or distribute the Bot or any
+                portion thereof without the express written consent of
+                the Bot Owner.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                6. Indemnification
+            </h2>
+
+            <p>
+                The User agrees to indemnify and hold harmless the Bot
+                Owner, its affiliates, and their respective directors,
+                officers, employees, and agents from any and all claims,
+                damages, liabilities, costs, and expenses, including
+                reasonable attorneys' fees, arising out of the User's
+                use of the Bot.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                7. Termination
+            </h2>
+
+            <p>
+                This Agreement may be terminated by either party at any
+                time for any reason. Upon termination, the User must
+                immediately cease all use of the Bot.
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                8. Governing Law
+            </h2>
+
+            <p>
+                This Agreement shall be governed by and construed in
+                accordance with the laws of [Your country/state/province].
+                Any dispute arising under or in connection with this
+                Agreement shall be resolved by arbitration in accordance
+                with the rules of [Your arbitration provider].
+            </p>
+
+        </section>
+
+
+        <section class="tos-section">
+
+            <h2>
+                9. Entire Agreement
+            </h2>
+
+            <p>
+                This Agreement constitutes the entire agreement between
+                the parties and supersedes all prior or contemporaneous
+                agreements or representations, whether written or oral,
+                relating to the Bot.
+            </p>
+
+        </section>
+
+
+        <p class="tos-final">
+            By using the Bot, the User acknowledges that they have read
+            this Agreement, understand it, and agree to be bound by its
+            terms and conditions.
+        </p>
+
+    </article>
+
+</main>
+</body>
+
+</html>
