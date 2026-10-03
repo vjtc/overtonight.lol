@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+    --card-width: 430px;
+    --white: #fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    background: #090a0d;
+    color: white;
+    font-family: Inter, Arial, sans-serif;
+}
+
+#background {
+    position: fixed;
+    inset: -55px;
+    background:
+        linear-gradient(rgba(255, 192, 250, 0.13), rgba(0,0,0,.28)),
+        url("https://i.postimg.cc/jSfFx6Nq/image.png") center center / cover no-repeat;
+    filter: blur(0px);
+    transform: scale(1.08);
+    animation: backgroundMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundMove {
+    from {
+        transform: scale(1.08) translate3d(-.5%, -.3%, 0);
+    }
+    to {
+        transform: scale(1.13) translate3d(.6%, .4%, 0);
+    }
+}
+
+#background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.16);
+}
+
+#enter {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    cursor: pointer;
+    transition: opacity .65s ease, visibility .65s ease;
+}
+
+#enter.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#enter span {
+    font-size: 14px;
+    color: rgba(255,255,255,.9);
+    animation: enterPulse 2s ease-in-out infinite;
+}
+
+@keyframes enterPulse {
+    0%,100% { opacity: .45; }
+    50% { opacity: 1; }
+}
+
+#page {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .8s ease;
+}
+
+#page.visible {
+    opacity: 1;
+}
+
+.profile-area {
+    width: var(--card-width);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(1.12);
+}
+
+.profile-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            lch(80.04% 40.97 337.96 / 0.78),
+            lch(80.04% 40.97 337.96 / 0.78),
+        );
+
+    border: 1px solid lch(76.91% 47.69 338.63 / 0.78);
+
+    box-shadow:
+        0 20px 55px (80.04% 40.97 337.96 / 0.78),
+        inset 0 1px 0 rgba(255,255,255,.025);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.avatar {
+    width: 76px;
+    height: 76px;
+    margin-top: 24px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid rgba(255,255,255,.75);
+
+    box-shadow:
+        0 4px 18px rgba(255,255,255,.75);
+
+    background: #222;
+}
+
+.name {
+    margin-top: 7px;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 600;
+    text-shadow: 0 2px 8px rgba(255,255,255,.75);
+}
+
+.badge {
+    width: 19px;
+    height: 19px;
+    margin-top: 5px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ff9b00;
+    border: 1px solid rgba(255,255,255,.75);
+    background: rgba(255,255,255,.08);
+
+    font-size: 11px;
+}
+
+.activity {
+    width: 225px;
+    height: 62px;
+    margin-top: 19px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 7px;
+
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.075);
+
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.activity-avatar {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.activity-text {
+    min-width: 0;
+    margin-left: 7px;
+    text-align: left;
+}
+
+.activity-name {
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activity-time {
+    margin-top: 4px;
+    color: rgba(255,255,255,.5);
+    font-size: 8px;
+    white-space: nowrap;
+}
+
+.activity-icons {
+    margin-left: auto;
+    align-self: flex-start;
+    display: flex;
+    gap: 3px;
+    font-size: 7px;
+    color: rgba(255,255,255,.7);
+}
+
+.socials {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.social-icon {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain;
+    display: block;
+}
+
+.social {
+    color: white;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: .95;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.social:hover {
+    transform: translateY(-2px) scale(1.06);
+    opacity: .7;
+}
+
+.views {
+    position: absolute;
+    left: 9px;
+    bottom: 8px;
+}
+
+.eye {
+    font-size: 10px;
+}
+
+.music-player {
+    width: var(--card-width);
+    height: 90px;
+    margin-top: 8px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0),
+            rgba(255,255,255,0)
+        );
+
+    border: 1px solid rgba(255,255,255,.075);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    padding: 7px 9px;
+}
+
+.song-cover {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 6px;
+    object-fit: cover;
+
+    background: #222;
+}
+
+.song-info {
+    height: 35px;
+    flex: 1;
+    min-width: 0;
+
+    margin-left: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.song-title {
+    font-size: 10px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-time {
+    margin-top: 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: rgba(255,255,255,.7);
+    font-size: 8px;
+}
+
+.progress {
+    height: 12px;
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.progress-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 99px;
+    background: rgba(255,255,255,.25);
+    pointer-events: none;
+}
+
+.progress-fill {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0%;
+    height: 3px;
+    border-radius: 99px;
+    background: white;
+    pointer-events: none;
+}
+
+.progress-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 12px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.player {
+    position: relative;
+    margin: 10px auto 0;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+}
+
+.player-buttons {
+    position: absolute;
+
+    bottom: 5px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.player-button {
+    border: 0;
+    background: transparent;
+    color: white;
+    padding: 0;
+    cursor: pointer;
+    opacity: .85;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.player-button:hover {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.player-button img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
+}
+
+.player-button,
+.volume-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-button img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+}
+
+.volume-button {
+    border: 0;
+    background: transparent;
+    color: white;
+    padding: 0;
+    width: 18px;
+    height: 20px;
+    flex: 0 0 18px;
+    cursor: pointer;
+    opacity: .85;
+}
+
+.volume-button:hover {
+    opacity: 1;
+}
+
+.volume-button img {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    display: block;
+}
+
+.volume {
+    position: fixed;
+    top: 12px;
+    left: 9px;
+    z-index: 10;
+
+    height: 31px;
+    width: 108px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 5px 8px;
+
+    border-radius: 8px;
+
+    background: rgba(90,90,90,.86);
+    border: 1px solid rgba(255, 254, 254, 0.25);
+
+    box-shadow: 0 2px 8px rgba(255, 254, 254, 0.25);
+}
+
+.volume-icon {
+    font-size: 13px;
+    line-height: 1;
+}
+
+.volume input {
+    width: 56px;
+    height: 3px;
+    margin-right: 4px;
+    accent-color: white;
+    cursor: pointer;
+}
+
+#setup {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 30;
+
+    width: 240px;
+    padding: 14px;
+
+    display: none;
+
+    border-radius: 12px;
+
+    background: rgba(20,20,20,.9);
+    border: 1px solid rgba(255,255,255,.1);
+
+    backdrop-filter: blur(18px);
+}
+
+#setup.open {
+    display: block;
+}
+
+#setup h3 {
+    margin: 0 0 10px;
+    font-size: 12px;
+}
+
+#setup label {
+    display: block;
+    margin-top: 9px;
+    font-size: 10px;
+    color: #aaa;
+}
+
+#setup input {
+    width: 100%;
+    margin-top: 5px;
+    font-size: 9px;
+    color: white;
+}
+
+#setup p {
+    margin: 10px 0 0;
+    color: #777;
+    font-size: 9px;
+    line-height: 1.4;
+}
+
+@media (max-width: 500px) {
+    :root {
+        --card-width: 320px;
+    }
+
+    .profile-area {
+        width: var(--card-width);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(1.12);
+    }
+
+    .profile-card {
+        width: var(--card-width);
+        height: auto;
+        min-height: 0;
+        padding-bottom: 15px;
+    }
+
+    .volume {
+        top: 10px;
+        left: 7px;
+    }
+}
+
+html, body, body * { cursor: none !important; }
+#sparkles {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="background"></div>
+
+<div id="enter">
+    <span>click to enter...</span>
+</div>
+
+<div class="volume">
+    <button id="muteButton" class="volume-button" type="button" aria-label="Mute">
+        <img id="volumeIcon" src="images/icons/volume.png" alt="Volume">
+    </button>
+    <input id="volumeSlider" type="range" min="0" max="1" step=".01" value=".30" aria-label="Volume">
+</div>
+
+<main id="page">
+
+<div class="profile-area">
+
+    <section class="profile-card">
+
+        <img id="profileImage" class="avatar" src="https://i.postimg.cc/k5FY8nTm/image.png" alt="Leo">
+
+        <div class="name">Leo</div>
+
+        <div class="socials">
+            <a class="social" href="https://s.team/p/ggpm-qwdt/PHCDTHBK" target="_blank" rel="noopener">
+                <img class="social-icon" src="https://i.postimg.cc/kMKZJxbm/image.png">
+            </a>
+
+            <a class="social" href="https://www.roblox.com/share?code=dd389dbf3a87b14682863042629ec766&type=Profile&source=ProfileShare&stamp=1790833541469" target="_blank" rel="noopener">
+                <img class="social-icon" src="https://i.postimg.cc/Kvh6B92L/image.png">
+            </a>
+
+            <a class="social" href="https://open.spotify.com/user/small._.fry._.luna?si=b7dw41JIQ5O_7WyGEOP1LQ&utm_source=copy-link" target="_blank" rel="noopener">
+                <img class="social-icon" src="https://i.postimg.cc/yxc22RF3/image.png">
+            </a>
+        </div>
+
+        <div class="views">
+            <span class="eye"></span>
+            <span></span>
+        </div>
+
+    </section>
+
+    <section class="music-player">
+
+        <img id="songCover" class="song-cover" src="images/icons/wun.png" alt="">
+
+        <div class="song-info">
+            <div id="songTitle" class="song-title">Using You</div>
+
+            <div class="song-time">
+                <span id="currentTime">0:00</span>
+
+                <div class="progress">
+                    <div class="progress-track"></div>
+                    <div id="progressFill" class="progress-fill"></div>
+
+                    <input
+                        id="progressInput"
+                        class="progress-input"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="0"
+                        step="0.01"
+                    >
+                </div>
+
+                <span id="duration">1:46</span>
+            </div>
+        </div>
+
+        <div class="player-buttons">
+            <button class="player-button" id="previousButton" type="button" aria-label="Previous song">
+                <img id="previousIcon" src="https://i.postimg.cc/JzN4jyvy/image.png" alt="Previous">
+            </button>
+
+            <button class="player-button" id="playButton" type="button" aria-label="Play/Pause">
+                <img id="playIcon" src="https://i.postimg.cc/CLdqC4sj/image.png" alt="Pause">
+            </button>
+
+            <button class="player-button" id="nextButton" type="button" aria-label="Next song">
+                <img id="nextIcon" src="https://i.postimg.cc/pyNRFxBr/image.png" alt="Next">
+            </button>
+        </div>
+
+    </section>
+
+    </div>
+
+</main>
+
+<div id="setup">
+    <h3>Page files</h3>
+
+    <label>
+        Background
+        <input id="backgroundPicker" type="file" accept="image/*">
+    </label>
+
+    <label>
+        Profile picture
+        <input id="profilePicker" type="file" accept="image/*">
+    </label>
+<p>
+    </p>
+</div>
+
+<audio id="audio" preload="metadata"></audio>
+
+<canvas id="sparkles"></canvas>
+
+<script>
+const canvas =
+            document.getElementById("sparkles");
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        const sparkleImage =
+            new Image();
+
+        sparkleImage.src =
+            "https://i.postimg.cc/YqcH8r1W/35244-fish.gif";
+
+
+        let particles = [];
+        let cursorX = window.innerWidth / 2;
+        let cursorY = window.innerHeight / 2;
+        let cursorVisible = true;
+
+        function drawStar(x, y, outer = 11, inner = 4) {
+            ctx.beginPath();
+            for (let i = 0; i < 10; i++) {
+                const radius = i % 2 === 0 ? outer : inner;
+                const angle = -Math.PI / 2 + i * Math.PI / 5;
+                const px = x + Math.cos(angle) * radius;
+                const py = y + Math.sin(angle) * radius;
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.fillStyle = "#fff";
+            ctx.shadowColor = "rgba(255,255,255,.9)";
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function resizeCanvas() {
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+        }
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        resizeCanvas();
+
+
+        window.addEventListener(
+            "mousemove",
+            event => {
+
+                cursorX = event.clientX;
+                cursorY = event.clientY;
+                cursorVisible = true;
+
+                for (
+                    let i = 0;
+                    i < 1;
+                    i++
+                ) {
+
+                    particles.push({
+
+                        x: event.clientX,
+                        y: event.clientY,
+
+                        size:
+                            10 +
+                            Math.random() * 10,
+
+                        vx:
+                            (Math.random() - 0.5) *
+                            1.5,
+
+                        vy:
+                            (Math.random() - 0.5) *
+                            1.5,
+
+                        life: 1,
+
+                        decay:
+                            Math.random() * 0.03 +
+                            0.015,
+
+                        rotation:
+                            Math.random() *
+                            Math.PI *
+                            2,
+
+                        spin:
+                            (Math.random() - 0.5) *
+                            0.05
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        function animate() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            particles =
+                particles.filter(p => {
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    p.life -= p.decay;
+
+                    p.rotation += p.spin;
+
+
+                    if (p.life <= 0) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        sparkleImage.complete &&
+                        sparkleImage.naturalWidth
+                    ) {
+
+                        ctx.save();
+
+                        ctx.globalAlpha =
+                            p.life;
+
+
+                        ctx.translate(
+                            p.x,
+                            p.y
+                        );
+
+
+                        ctx.rotate(
+                            p.rotation
+                        );
+
+
+                        ctx.drawImage(
+
+                            sparkleImage,
+
+                            -p.size,
+                            -p.size,
+
+                            p.size,
+                            p.size
+
+                        );
+
+
+                        ctx.restore();
+
+                    }
+
+
+                    else {
+                        drawStar(p.x, p.y, p.size, p.size * 0.4);
+                    }
+
+                    return true;
+
+                });
+
+            // Keep a visible cursor marker at the current pointer position,
+            // even when the original cursor image is unavailable.
+            if (cursorVisible) {
+                if (sparkleImage.complete && sparkleImage.naturalWidth) {
+                    ctx.save();
+                    ctx.shadowColor = "rgba(255,255,255,.85)";
+                    ctx.shadowBlur = 10;
+                    ctx.drawImage(sparkleImage, cursorX - 12, cursorY - 12, 24, 24);
+                    ctx.restore();
+                } else {
+                    drawStar(cursorX, cursorY, 12, 5);
+                }
+            }
+
+            requestAnimationFrame(
+                animate
+            );
+
+        }
+
+
+        animate();
+
+
+
+const enter = document.getElementById("enter");
+const page = document.getElementById("page");
+const audio = document.getElementById("audio");
+
+const playButton = document.getElementById("playButton");
+const playIcon = document.getElementById("playIcon");
+const previousButton = document.getElementById("previousButton");
+const nextButton = document.getElementById("nextButton");
+
+const volumeSlider = document.getElementById("volumeSlider");
+const muteButton = document.getElementById("muteButton");
+const volumeIcon = document.getElementById("volumeIcon");
+
+const songCover = document.getElementById("songCover");
+const songTitle = document.getElementById("songTitle");
+const progressFill = document.getElementById("progressFill");
+const progressInput = document.getElementById("progressInput");
+const currentTime = document.getElementById("currentTime");
+const duration = document.getElementById("duration");
+
+const ICONS = {
+    play: "https://i.postimg.cc/66Fv0vjr/image.png",
+    pause: "https://i.postimg.cc/HWrMX22W/pause.png",
+    mute: "https://i.postimg.cc/sXXjFTX9/mute.png",
+    volume: "https://i.postimg.cc/3JpDbxVc/image.png"
+};
+
+const playlist = [
+    {
+        title: "Using You",
+        files: ["audio/songs/uy.mp3", "audio/songs/music/uy.mp3", "uy.mp3"],
+        cover: "https://i.postimg.cc/BZz63f2G/image.png"
+    },
+    {
+        title: "Les",
+        files: ["audio/songs/les.mp3", "audio/songs/music/les.mp3"],
+        cover: "https://i.postimg.cc/C52HCrZq/image.png"
+    },
+    {
+        title: "Falling For Ya",
+        files: ["audio/songs/ffy.mp3", "audio/songs/music/ffy.mp3"],
+        cover: "https://i.postimg.cc/YqJzhVBq/image.png"
+    },
+    {
+        title: "Lucky Number 3",
+        files: ["audio/songs/bta.mp3", "audio/songs/music/bta.mp3"],
+        cover: "https://i.postimg.cc/yNTmp8gV/image.png"
+    },
+    {
+        title: "LowLife",
+        files: ["audio/songs/ll.mp3", "audio/songs/music/ll.mp3"],
+        cover: "https://i.postimg.cc/NFZm2yVT/image.png"
+    }
+];
+
+let currentSong = 0;
+let lastVolume = Number(volumeSlider.value);
+
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds)) return "0:00";
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${secs}`;
+}
+
+function updatePlayIcon() {
+    playIcon.src = audio.paused ? ICONS.play : ICONS.pause;
+    playIcon.alt = audio.paused ? "Play" : "Pause";
+}
+
+function setMuted(muted) {
+    if (muted) {
+        if (audio.volume > 0) lastVolume = audio.volume;
+        audio.muted = true;
+        volumeIcon.src = ICONS.mute;
+        volumeIcon.alt = "Unmute";
+        muteButton.setAttribute("aria-label", "Unmute");
+    } else {
+        audio.muted = false;
+        audio.volume = lastVolume > 0 ? lastVolume : 0.30;
+        volumeSlider.value = audio.volume;
+        volumeIcon.src = ICONS.volume;
+        volumeIcon.alt = "Mute";
+        muteButton.setAttribute("aria-label", "Mute");
+    }
+}
+
+let sourceAttempt = 0;
+
+function loadSong(index, shouldPlay = false) {
+    currentSong = (index + playlist.length) % playlist.length;
+    const song = playlist[currentSong];
+
+    sourceAttempt = 0;
+
+    songTitle.textContent = song.title;
+    songCover.src = song.cover;
+
+    currentTime.textContent = "0:00";
+    duration.textContent = "0:00";
+    progressFill.style.width = "0%";
+    progressInput.value = 0;
+
+    setAudioSource(shouldPlay);
+}
+
+function setAudioSource(shouldPlay = false) {
+    const song = playlist[currentSong];
+
+    if (sourceAttempt >= song.files.length) {
+        console.error("Could not find audio file for:", song.title, song.files);
+        updatePlayIcon();
+        return;
+    }
+
+    audio.src = song.files[sourceAttempt];
+    audio.load();
+
+    if (shouldPlay) {
+        audio.play().catch(error => {
+            console.warn("Could not play:", audio.src, error);
+        });
+    }
+
+    updatePlayIcon();
+}
+
+audio.addEventListener("error", () => {
+    const song = playlist[currentSong];
+    sourceAttempt++;
+
+    if (sourceAttempt < song.files.length) {
+        setAudioSource(!audio.paused);
+    } else {
+        console.error("All audio paths failed for:", song.title, song.files);
+        updatePlayIcon();
+    }
+});
+
+function nextSong() {
+    loadSong(currentSong + 1, true);
+}
+
+function previousSong() {
+    if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+        return;
+    }
+    loadSong(currentSong - 1, true);
+}
+
+audio.volume = 0.25;
+volumeSlider.value = 0.30;
+audio.muted = false;
+volumeIcon.src = ICONS.volume;
+
+muteButton.addEventListener("click", () => setMuted(!audio.muted));
+previousButton.addEventListener("click", previousSong);
+nextButton.addEventListener("click", nextSong);
+
+enter.addEventListener("click", async () => {
+    enter.classList.add("hidden");
+    page.classList.add("visible");
+    try { await audio.play(); } catch {}
+    updatePlayIcon();
+});
+
+playButton.addEventListener("click", async () => {
+    if (audio.paused) {
+        try { await audio.play(); } catch {}
+    } else {
+        audio.pause();
+    }
+    updatePlayIcon();
+});
+
+volumeSlider.addEventListener("input", () => {
+    audio.volume = Number(volumeSlider.value);
+    audio.muted = false;
+    lastVolume = audio.volume;
+    volumeIcon.src = audio.volume === 0 ? ICONS.mute : ICONS.volume;
+    volumeIcon.alt = audio.volume === 0 ? "Unmute" : "Mute";
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    duration.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener("timeupdate", () => {
+    currentTime.textContent = formatTime(audio.currentTime);
+    if (audio.duration) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = `${percent}%`;
+        if (document.activeElement !== progressInput) progressInput.value = percent;
+    }
+});
+
+progressInput.addEventListener("input", () => {
+    if (!audio.duration) return;
+    const percent = Number(progressInput.value);
+    audio.currentTime = (percent / 100) * audio.duration;
+    progressFill.style.width = `${percent}%`;
+    currentTime.textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener("ended", nextSong);
+
+loadSong(0);
+
+document.getElementById("backgroundPicker").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    background.style.backgroundImage =
+        `linear-gradient(rgba(255,255,255,.13), rgba(0,0,0,.28)), url("${url}")`;
+});
+
+document.getElementById("profilePicker").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    profileImage.src = url;
+    songCover.src = url;
+});
+document.addEventListener("keydown", event => {
+    if (event.key.toLowerCase() === "u") {
+        setup.classList.toggle("open");
+        return;
+    }
+
+    if (document.activeElement.tagName === "INPUT") return;
+
+    if (event.code === "Space") {
+        event.preventDefault();
+
+        if (audio.paused) {
+            audio.play().catch(() => {});
+        } else {
+            audio.pause();
+        }
+
+        updatePlayIcon();
+    }
+
+    if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        previousSong();
+    }
+
+    if (event.key === "ArrowRight") {
+        event.preventDefault();
+        nextSong();
+    }
+});
+</script>
+
+</body>
+</html>
